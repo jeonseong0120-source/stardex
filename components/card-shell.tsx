@@ -1,12 +1,12 @@
 import type { CSSProperties } from "react";
 
-type CardShellProps = { name:string; englishName:string; rarity:string; serial:string; skill:string; flavor:string; artwork?:string; accent:string; palette?:string; compact?:boolean };
+type CardShellProps = { name:string; englishName:string; rarity:string; serial:string; skill:string; flavor:string; artwork?:string; accent:string; palette?:string; compact?:boolean; cardKey?:string };
 
-export function CardShell({name,englishName,rarity,serial,skill,flavor,artwork,accent,palette="violet",compact=false}:CardShellProps){
+export function CardShell({name,englishName,rarity,serial,skill,flavor,artwork,accent,palette="violet",compact=false,cardKey}:CardShellProps){
   const rarityClass=rarity.toLowerCase().replaceAll(" ","-");
   const isFoil=["SUPER RARE","SECRET RARE","UR","BR"].includes(rarity);
   const rarityLabel:Record<string,string>={"COMMON":"C","RARE":"R","ART RARE":"AR","SUPER RARE":"SR","SECRET RARE":"SSR","UR":"UR","BR":"BR"};
-  return <article className={`tcg-shell tcg-shell--${palette} tcg-shell--${rarityClass} ${isFoil?"tcg-shell--foil-card":""} ${compact?"tcg-shell--compact":""}`} style={{"--accent":accent} as CSSProperties}>
+  return <article data-card-key={cardKey} className={`tcg-shell tcg-shell--${palette} tcg-shell--${rarityClass} ${isFoil?"tcg-shell--foil-card":""} ${compact?"tcg-shell--compact":""}`} style={{"--accent":accent} as CSSProperties}>
     <div className="tcg-shell__art">{artwork&&<img src={artwork} alt="" />}</div><div className="tcg-shell__shade"/><div className="tcg-shell__foil"/>
     <header className="tcg-shell__header"><b>{rarityLabel[rarity]||rarity}</b><span>STARDEX · YT01</span><small>{serial}</small></header>
     <aside className="tcg-shell__rail">CREATOR<br/>COLLECTIBLE<br/>EDITION</aside>
