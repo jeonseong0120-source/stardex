@@ -1,0 +1,1 @@
+.art-scene{display:none!important}.gallery-card:has(.gallery-final){background:#08080e;border-color:#c9d2ff}.gallery-card:has(.gallery-final):after{content:"";position:absolute;inset:auto 0 0;height:26%;pointer-events:none;background:linear-gradient(transparent,#05050ae6)}

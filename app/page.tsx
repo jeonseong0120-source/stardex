@@ -7,6 +7,7 @@ import "./reveal-flow.css";
 import "./final-cards.css";
 import "./ar.css";
 import "./raw-art.css";
+import "./card-cleanup.css";
 import { PointerEvent, useMemo, useRef, useState } from "react";
 
 type Rarity = "COMMON" | "RARE" | "ART RARE" | "SUPER RARE" | "SECRET RARE";
