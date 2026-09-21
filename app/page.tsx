@@ -12,6 +12,7 @@ import "./card-system.css";
 import "./tcg-shell.css";
 import "./layout-fixes.css";
 import "./card-scale.css";
+import "./br-card.css";
 import { CardShell } from "../components/card-shell";
 import { PointerEvent, useMemo, useRef, useState } from "react";
 

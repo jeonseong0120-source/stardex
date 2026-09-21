@@ -1,6 +1,7 @@
 "use client";
 import "./gallery.css";
 import "./tcg-shell.css";
+import "./br-card.css";
 import { useEffect, useRef, useState } from "react";
 import { CardShell } from "../components/card-shell";
 
