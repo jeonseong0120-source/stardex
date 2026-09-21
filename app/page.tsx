@@ -10,6 +10,7 @@ import "./raw-art.css";
 import "./card-cleanup.css";
 import "./card-system.css";
 import "./tcg-shell.css";
+import "./layout-fixes.css";
 import { CardShell } from "../components/card-shell";
 import { PointerEvent, useMemo, useRef, useState } from "react";
 
@@ -23,7 +24,7 @@ const artwork:Record<string,string>={감스트:"/cards/gamst-super-rare-art.png"
 const completed:Record<string,string>={침착맨:"/cards/chimchakman-secret-rare.png",랄로:"/cards/ralo-secret-rare.png",곽튜브:"/cards/kwak-tube-art-rare.png"};
 const english:Record<string,string>={침착맨:"CHIMCHAKMAN",랄로:"RALO",곽튜브:"KWAK TUBE",빠더너스:"BDNS",감스트:"GAMST",피식대학:"PSICK UNIV.",숏박스:"SHORT BOX",지무비:"G MOVIE",말왕:"MALWANG",보겸:"BOKYEM",떵개떵:"TTEONG",윤가놈:"YOONGANOM"};
 const accents:Record<Rarity,string>={"SECRET RARE":"#e8b8ff","SUPER RARE":"#ff8ca5","ART RARE":"#57e5ab","RARE":"#78bafc","COMMON":"#c3c6d2"};
-function CardFace({card,serial,small=false}:{card:Card;serial:number;small?:boolean}){const serialNo=`STX-YT01-${card.no}-${String(serial).padStart(6,"0")}`;if(completed[card.name])return <article className={`tcg-complete ${small?"tcg-complete--compact":""}`}><img src={completed[card.name]} alt={`${card.name} 완성 카드`}/></article>;return <CardShell name={card.name} englishName={english[card.name]} rarity={card.rarity} serial={serialNo} skill={card.flavor} flavor={card.name==="감스트"?"골이 터지는 순간, 누구보다 먼저 세레머니를 시작한다.":card.name==="피식대학"?"유쾌한 한마디가 도시의 공기를 바꾼다.":"크리에이터의 한 장면을 기록한 STARDEX 카드."} artwork={artwork[card.name]} accent={accents[card.rarity]} palette={card.palette} compact={small}/>}
+function CardFace({card,serial,small=false}:{card:Card;serial:number;small?:boolean}){const serialNo=`STX-YT01-${card.no}-${String(serial).padStart(6,"0")}`;if(completed[card.name])return <article className={`tcg-complete ${small?"tcg-complete--compact":""}`}><img src={completed[card.name]} alt={`${card.name} 완성 카드`}/></article>;return <CardShell name={card.name} englishName={english[card.name]} rarity={card.rarity} serial={serialNo} skill={card.flavor} flavor={card.name==="감스트"?"골이 터지는 순간, 누구보다 먼저 세레머니를 시작한다.":card.name==="피식대학"?"유쾌한 한마디가 도시의 공기를 바꾼다.":"크리에이터의 한 장면을 기록한 STARDEX 카드."} artwork={artwork[card.name]} accent={accents[card.rarity]} palette={card.palette}/>}
 function CardBack({index,flipped,children}:{index:number;flipped:boolean;children:React.ReactNode}){return <button className={`reveal-card ${flipped?"flipped":""}`} style={{"--i":index} as React.CSSProperties} aria-label={`${index+1}번째 카드 공개`}><span className="reveal-inner"><span className="card-back"><b>STARDEX</b><i>✦</i><small>YOUTUBE CREATORS · VOL.01</small></span><span className="card-front">{children}</span></span></button>}
 export default function Home(){
   const [coin,setCoin]=useState(3000),[pulls,setPulls]=useState<Card[]>([]),[opening,setOpening]=useState<Opening>("shop"),[pack,setPack]=useState<Card[]>([]),[flipped,setFlipped]=useState<number[]>([]),[view,setView]=useState<"shop"|"collection">("shop"),[drag,setDrag]=useState(0); const start=useRef(0);
