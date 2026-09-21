@@ -1,5 +1,6 @@
 "use client";
 import "./opening.css";
+import "./pack.css";
 import { PointerEvent, useMemo, useRef, useState } from "react";
 
 type Rarity = "COMMON" | "RARE" | "SUPER RARE" | "SECRET RARE";
