@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import GalleryEnhancer from "./gallery-enhancer";
 
 export const metadata: Metadata = {
   title: "STARDEX — YouTuber Pack Vol. 1",
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">{children}<GalleryEnhancer /></body>
     </html>
   );
 }
