@@ -11,6 +11,7 @@ import "./card-cleanup.css";
 import "./card-system.css";
 import "./tcg-shell.css";
 import "./layout-fixes.css";
+import "./card-scale.css";
 import { CardShell } from "../components/card-shell";
 import { PointerEvent, useMemo, useRef, useState } from "react";
 
