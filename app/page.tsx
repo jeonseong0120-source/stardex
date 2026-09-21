@@ -6,7 +6,6 @@ import "./depth.css";
 import "./stack.css";
 import "./reveal-flow.css";
 import "./final-cards.css";
-import "./ar.css";
 import "./raw-art.css";
 import "./card-cleanup.css";
 import "./card-system.css";
@@ -18,11 +17,11 @@ import "./lobby.css";
 import { CardShell } from "../components/card-shell";
 import { PointerEvent, useEffect, useMemo, useRef, useState } from "react";
 
-type Rarity = "COMMON" | "RARE" | "ART RARE" | "SUPER RARE" | "SECRET RARE" | "UR" | "BR" | "MR";
+type Rarity = "COMMON" | "RARE" | "SUPER RARE" | "SECRET RARE" | "UR" | "BR" | "MR";
 type Card = { no:string; name:string; rarity:Rarity; flavor:string; scene:string; palette:string };
 type Opening = "shop" | "box" | "tear" | "deal" | "result";
 const cards:Card[]=[
-  {no:"001",name:"침착맨",rarity:"BR",flavor:"방구석 토크",scene:"왕좌와 펜, 무표정의 명언",palette:"royal"},{no:"002",name:"랄로",rarity:"SUPER RARE",flavor:"주식과 무지개 무드",scene:"화면 너머, 해탈한 표정",palette:"rainbow"},{no:"003",name:"곽튜브",rarity:"ART RARE",flavor:"세계 로컬 식사",scene:"낯선 도시의 식탁",palette:"sunset"},{no:"004",name:"빠더너스",rarity:"SUPER RARE",flavor:"한국 지리 문쌤",scene:"칠판 앞의 능청스러운 한 컷",palette:"chalk"},{no:"005",name:"감스트",rarity:"SUPER RARE",flavor:"축구치킨 광기",scene:"골이 터진 직후의 세레머니",palette:"stadium"},{no:"006",name:"피식대학",rarity:"RARE",flavor:"성수동 바이브",scene:"레트로 셔츠와 도시의 밤",palette:"retro"},{no:"007",name:"숏박스",rarity:"ART RARE",flavor:"현실 연애 콩트",scene:"차 안의 아주 현실적인 대화",palette:"drive"},{no:"008",name:"지무비",rarity:"UR",flavor:"결말 포함 영화",scene:"필름과 스크린 사이",palette:"film"},{no:"009",name:"말왕",rarity:"SUPER RARE",flavor:"3대 500 괴력",scene:"철과 숨소리만 남은 체육관",palette:"gym"},{no:"010",name:"보겸",rarity:"SUPER RARE",flavor:"근황 올림픽",scene:"카메라를 향한 한 번의 인사",palette:"flash"},{no:"011",name:"떵개떵",rarity:"ART RARE",flavor:"소리 없는 아우성",scene:"가득 찬 식탁의 ASMR",palette:"table"},{no:"012",name:"윤가놈",rarity:"SUPER RARE",flavor:"포켓몬 마스터의 기행",scene:"몬스터볼과 이해할 수 없는 가설",palette:"monster"}
+  {no:"001",name:"침착맨",rarity:"BR",flavor:"방구석 토크",scene:"왕좌와 펜, 무표정의 명언",palette:"royal"},{no:"002",name:"랄로",rarity:"SUPER RARE",flavor:"주식과 무지개 무드",scene:"화면 너머, 해탈한 표정",palette:"rainbow"},{no:"003",name:"곽튜브",rarity:"SUPER RARE",flavor:"세계 로컬 식사",scene:"낯선 도시의 식탁",palette:"sunset"},{no:"004",name:"빠더너스",rarity:"SUPER RARE",flavor:"한국 지리 문쌤",scene:"칠판 앞의 능청스러운 한 컷",palette:"chalk"},{no:"005",name:"감스트",rarity:"SUPER RARE",flavor:"축구치킨 광기",scene:"골이 터진 직후의 세레머니",palette:"stadium"},{no:"006",name:"피식대학",rarity:"RARE",flavor:"성수동 바이브",scene:"레트로 셔츠와 도시의 밤",palette:"retro"},{no:"007",name:"숏박스",rarity:"SUPER RARE",flavor:"현실 연애 콩트",scene:"차 안의 아주 현실적인 대화",palette:"drive"},{no:"008",name:"지무비",rarity:"UR",flavor:"결말 포함 영화",scene:"필름과 스크린 사이",palette:"film"},{no:"009",name:"말왕",rarity:"SUPER RARE",flavor:"3대 500 괴력",scene:"철과 숨소리만 남은 체육관",palette:"gym"},{no:"010",name:"보겸",rarity:"SUPER RARE",flavor:"근황 올림픽",scene:"카메라를 향한 한 번의 인사",palette:"flash"},{no:"011",name:"떵개떵",rarity:"SUPER RARE",flavor:"소리 없는 아우성",scene:"가득 찬 식탁의 ASMR",palette:"table"},{no:"012",name:"윤가놈",rarity:"SUPER RARE",flavor:"포켓몬 마스터의 기행",scene:"몬스터볼과 이해할 수 없는 가설",palette:"monster"}
 ];
 cards.push(
   {no:"013",name:"주둥이방송 C",rarity:"COMMON",flavor:"방송의 시작",scene:"가장 담백한 한 장면",palette:"chalk"},
@@ -37,11 +36,11 @@ cards.push(
   {no:"022",name:"김규남",rarity:"SUPER RARE",flavor:"구름 위의 토끼",scene:"포근한 하늘에서 건네는 인사",palette:"sky"},
   {no:"023",name:"김계란",rarity:"SUPER RARE",flavor:"붉은 달의 수련",scene:"핏빛 달 아래에서 단련한다",palette:"crimson"},
   {no:"024",name:"엄지윤",rarity:"SUPER RARE",flavor:"블루문 서포터",scene:"경기장의 함성과 함께 달린다",palette:"stadium"},
-  {no:"025",name:"슈기",rarity:"ART RARE",flavor:"치킨 테이블",scene:"가장 맛있는 한 입을 고른다",palette:"table"},
-  {no:"026",name:"룩삼",rarity:"ART RARE",flavor:"심야 스트리밍",scene:"화면 너머의 순간을 함께 웃는다",palette:"night"},
-  {no:"027",name:"유후",rarity:"ART RARE",flavor:"창가의 멜로디",scene:"햇살과 함께 다음 곡을 기다린다",palette:"sunset"},
+  {no:"025",name:"슈기",rarity:"SUPER RARE",flavor:"치킨 테이블",scene:"가장 맛있는 한 입을 고른다",palette:"table"},
+  {no:"026",name:"룩삼",rarity:"SUPER RARE",flavor:"심야 스트리밍",scene:"화면 너머의 순간을 함께 웃는다",palette:"night"},
+  {no:"027",name:"유후",rarity:"SUPER RARE",flavor:"창가의 멜로디",scene:"햇살과 함께 다음 곡을 기다린다",palette:"sunset"},
   {no:"028",name:"유후(각성)",rarity:"SUPER RARE",flavor:"각성의 협주곡",scene:"무대 위 모든 음을 깨운다",palette:"arcane"},
-  {no:"029",name:"주우재",rarity:"ART RARE",flavor:"미니멀 룩",scene:"가장 담백한 실루엣을 완성한다",palette:"mono"},
+  {no:"029",name:"주우재",rarity:"SUPER RARE",flavor:"미니멀 룩",scene:"가장 담백한 실루엣을 완성한다",palette:"mono"},
   {no:"030",name:"카더가든",rarity:"MR",flavor:"보랏빛 마도서",scene:"별과 이야기 사이에서 노래를 꺼낸다",palette:"mythic"}
 );
 const artwork:Record<string,string>={침착맨:"/cards/chimchakman-super-rare-art.png",랄로:"/cards/ralo-super-rare-art.png",곽튜브:"/cards/kwaktube-art-rare-art.png",빠더너스:"/cards/moonsanghoon-super-rare-art.png",감스트:"/cards/gamst-super-rare-art.png",피식대학:"/cards/psick-univ-rare-art.png",숏박스:"/cards/shortbox-art-rare-art.png",지무비:"/cards/gmovie-ultra-rare-art.png",말왕:"/cards/malwang-super-rare-art.png",보겸:"/cards/bokyem-super-rare-art.png",떵개떵:"/cards/tteong-art-rare-art.png",윤가놈:"/cards/yoonganom-super-rare-art.png"};
@@ -60,7 +59,7 @@ Object.assign(displayTitles,{"미미미누 C":"미미미누","쯔앙 C":"쯔앙"
 Object.assign(artwork,{김규남:"/cards/kimgyunam-super-rare-art.png",김계란:"/cards/kimegg-super-rare-art.png",엄지윤:"/cards/umjiyoon-super-rare-art.png",슈기:"/cards/syugi-art-rare-art.png",룩삼:"/cards/looksams-art-rare-art.png",유후:"/cards/yuhoo-art-rare-art.png","유후(각성)":"/cards/yuhoo-awakened-super-rare-art.png",주우재:"/cards/joowoojae-art-rare-art.png",카더가든:"/cards/cardergarden-mythic-rare-art.png"});
 Object.assign(english,{김규남:"KIM GYUNAM",김계란:"KIM EGG",엄지윤:"UM JIYOON",슈기:"SYUGI",룩삼:"LOOKSAM",유후:"YUHOO","유후(각성)":"YUHOO · AWAKENED",주우재:"JOO WOOJAE",카더가든:"CAR, THE GARDEN"});
 Object.assign(descriptions,{김규남:"구름처럼 포근한 미소로 가장 가벼운 인사를 건넨다.",김계란:"붉은 달 아래에서도 자신만의 훈련을 멈추지 않는다.",엄지윤:"경기장의 환호를 가장 밝은 표정으로 받아낸다.",슈기:"가득 찬 테이블 위에서 가장 맛있는 순간을 기록한다.",룩삼:"심야의 화면 앞에서 이야기를 함께 웃는다.",유후:"창가에 머문 햇살처럼 차분한 멜로디를 전한다.","유후(각성)":"각성한 손끝으로 모든 음을 무대 위에 불러낸다.",주우재:"담백한 태도로 가장 선명한 실루엣을 남긴다.",카더가든:"보랏빛 마도서에서 새로운 이야기를 꺼내 노래한다."});
-const accents:Record<Rarity,string>={"SECRET RARE":"#e8b8ff","SUPER RARE":"#ff8ca5","ART RARE":"#57e5ab","RARE":"#78bafc","COMMON":"#c3c6d2",UR:"#f6c65c",BR:"#24242b",MR:"#c59aff"};
+const accents:Record<Rarity,string>={"SECRET RARE":"#e8b8ff","SUPER RARE":"#ff8ca5","RARE":"#78bafc","COMMON":"#c3c6d2",UR:"#f6c65c",BR:"#24242b",MR:"#c59aff"};
 function CardFace({card,serial,small=false}:{card:Card;serial:number;small?:boolean}){const serialNo=`STX-YT01-${card.no}-${String(serial).padStart(6,"0")}`;if(completed[card.name])return <article className={`tcg-complete ${small?"tcg-complete--compact":""}`}><img src={completed[card.name]} alt={`${card.name} 완성 카드`}/></article>;return <CardShell cardKey={card.name} name={displayTitles[card.name]||card.name} englishName={english[card.name]} rarity={card.rarity} serial={serialNo} skill={card.flavor} flavor={descriptions[card.name]||"크리에이터의 한 장면을 기록한 STARDEX 카드."} artwork={artwork[card.name]} accent={accents[card.rarity]} palette={card.palette}/>}
 function CardBack({index,flipped,children}:{index:number;flipped:boolean;children:React.ReactNode}){return <button className={`reveal-card ${flipped?"flipped":""}`} style={{"--i":index} as React.CSSProperties} aria-label={`${index+1}번째 카드 공개`}><span className="reveal-inner"><span className="card-back"><b>STARDEX</b><i>✦</i><small>YOUTUBE CREATORS · VOL.01</small></span><span className="card-front">{children}</span></span></button>}
 export default function Home(){
