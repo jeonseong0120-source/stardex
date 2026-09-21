@@ -1,7 +1,7 @@
 "use client";
 import "./opening.css";
+import "./booster-product.css";
 import "./pack.css";
-import "./live-foil.css";
 import "./depth.css";
 import "./stack.css";
 import "./reveal-flow.css";
