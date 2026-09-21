@@ -53,7 +53,7 @@ export default function Home(){
   const owned=useMemo(()=>new Set(pulls.map(c=>c.no)),[pulls]);
   const draw=()=>cards[Math.floor(Math.random()*cards.length)];
   const buy=()=>{if(coin<1000)return;setCoin(v=>v-1000);setPack([draw(),draw(),draw(),draw(),draw()]);setFlipped([]);setDrag(0);setOpening("box")};
-useEffect(()=>{if(opening!=="box")return;const timer=window.setTimeout(()=>setOpening("tear"),1700);return()=>window.clearTimeout(timer)},[opening]);
+useEffect(()=>{if(opening!=="box")return;const timer=window.setTimeout(()=>setOpening("tear"),2400);return()=>window.clearTimeout(timer)},[opening]);
   const begin=(e:PointerEvent<HTMLDivElement>)=>{start.current=e.clientY;e.currentTarget.setPointerCapture(e.pointerId)};
   const move=(e:PointerEvent<HTMLDivElement>)=>{if(!start.current)return;const next=Math.max(0,Math.min(100,(start.current-e.clientY)*1.25));setDrag(next);if(next>=100){start.current=0;setTimeout(()=>setOpening("deal"),180)}};
   const end=()=>{if(drag<100)setDrag(0);start.current=0};
