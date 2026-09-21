@@ -3,6 +3,7 @@ import "./opening.css";
 import "./pack.css";
 import "./depth.css";
 import "./stack.css";
+import "./reveal-flow.css";
 import { PointerEvent, useMemo, useRef, useState } from "react";
 
 type Rarity = "COMMON" | "RARE" | "SUPER RARE" | "SECRET RARE";
