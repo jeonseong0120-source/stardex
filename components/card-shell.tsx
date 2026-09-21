@@ -4,7 +4,7 @@ type CardShellProps = { name:string; englishName:string; rarity:string; serial:s
 
 export function CardShell({name,englishName,rarity,serial,skill,flavor,artwork,accent,palette="violet",compact=false}:CardShellProps){
   const rarityClass=rarity.toLowerCase().replaceAll(" ","-");
-  const isFoil=["ART RARE","SUPER RARE","SECRET RARE"].includes(rarity);
+  const isFoil=["ART RARE","SUPER RARE","SECRET RARE","UR"].includes(rarity);
   return <article className={`tcg-shell tcg-shell--${palette} tcg-shell--${rarityClass} ${isFoil?"tcg-shell--foil-card":""} ${compact?"tcg-shell--compact":""}`} style={{"--accent":accent} as CSSProperties}>
     <div className="tcg-shell__art">{artwork&&<img src={artwork} alt="" />}</div><div className="tcg-shell__shade"/><div className="tcg-shell__foil"/>
     <header className="tcg-shell__header"><b>{rarity}</b><span>STARDEX · YT01</span><small>{serial}</small></header>
