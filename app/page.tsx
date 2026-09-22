@@ -101,7 +101,7 @@ export default function Home(){
   const [coin,setCoin]=useState(3000),[pulls,setPulls]=useState<Card[]>([]),[opening,setOpening]=useState<Opening>("shop"),[pack,setPack]=useState<Card[]>([]),[flipped,setFlipped]=useState<number[]>([]),[revealing,setRevealing]=useState(false),[view,setView]=useState<"shop"|"collection">("shop"),[drag,setDrag]=useState(0); const start=useRef(0);
   const owned=useMemo(()=>new Set(pulls.map(c=>c.no)),[pulls]);
   const draw=()=>cards[Math.floor(Math.random()*cards.length)];
-  const buy=()=>{if(coin<1)return;setCoin(v=>v-1);setPack([draw(),draw(),draw(),draw(),draw()]);setFlipped([]);setDrag(0);setOpening("tear")};
+  const buy=()=>{if(coin<1)return;const rarityOrder:Record<Rarity,number>={COMMON:0,RARE:1,"SUPER RARE":2,MR:3,UR:4,BR:5,"SECRET RARE":2};const nextPack=[draw(),draw(),draw(),draw(),draw()].sort((a,b)=>rarityOrder[a.rarity]-rarityOrder[b.rarity]);setCoin(v=>v-1);setPack(nextPack);setFlipped([]);setDrag(0);setOpening("tear")};
 useEffect(()=>{if(opening!=="box")return;const timer=window.setTimeout(()=>setOpening("tear"),3200);return()=>window.clearTimeout(timer)},[opening]);
   const begin=(e:PointerEvent<HTMLDivElement>)=>{start.current=e.clientY;e.currentTarget.setPointerCapture(e.pointerId)};
   const move=(e:PointerEvent<HTMLDivElement>)=>{if(!start.current)return;const next=Math.max(0,Math.min(100,(start.current-e.clientY)*1.25));setDrag(next);if(next>=100){start.current=0;setTimeout(()=>setOpening("deal"),180)}};
