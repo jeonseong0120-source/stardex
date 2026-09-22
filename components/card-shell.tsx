@@ -2,6 +2,12 @@ import type { CSSProperties } from "react";
 
 type CardShellProps = { name:string; englishName:string; rarity:string; serial:string; skill:string; flavor:string; artwork?:string; accent:string; palette?:string; compact?:boolean; cardKey?:string };
 
+export function CardBackFace({serial,rarity,accent}:{serial:string;rarity:string;accent:string}){
+  return <article className="tcg-card-back" style={{"--accent":accent} as CSSProperties} aria-label={`${rarity} 카드 뒷면`}>
+    <div className="tcg-card-back__frame"/><span className="tcg-card-back__serial">{serial}</span><div className="tcg-card-back__mark"><i>△</i><b>STARDEX</b><small>CREATOR COLLECTIBLE</small></div><span className="tcg-card-back__rarity">{rarity}</span>
+  </article>;
+}
+
 export function CardShell({name,englishName,rarity,serial,skill,flavor,artwork,accent,palette="violet",compact=false,cardKey}:CardShellProps){
   const rarityClass=rarity.toLowerCase().replaceAll(" ","-");
   const isFoil=["SUPER RARE","SECRET RARE","UR","BR","MR"].includes(rarity);
