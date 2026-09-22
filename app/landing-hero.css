@@ -1,0 +1,41 @@
+/* Landing is an archive introduction: the physical box is the hero. */
+.lobby-view { min-height:calc(100svh - 132px); padding-top:clamp(2rem,4vh,3.5rem)!important; background:radial-gradient(ellipse 58% 45% at 50% 45%,#fff 0%,#f4f2ec 64%,#e9e6df 100%); }
+.lobby-view::before { display:none!important; }
+.lobby-heading .eyebrow { margin:0 0 .85rem; color:#68635b; font-size:.56rem; letter-spacing:.34em; }
+.lobby-heading h1 { margin:0!important; color:#171615!important; font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Pretendard",sans-serif!important; font-size:0!important; font-weight:360!important; letter-spacing:-.065em!important; line-height:.92!important; text-shadow:none!important; }
+.lobby-heading h1 i { display:none; }
+.lobby-heading h1::before { content:"YOUR CREATOR.\A YOUR CARD."; white-space:pre; font-size:clamp(2.45rem,5.25vw,5.2rem); line-height:.92; }
+.box-carousel { width:min(100%,1120px)!important; height:clamp(370px,39vw,540px)!important; margin-top:clamp(.6rem,2vh,1.5rem)!important; filter:none!important; }
+.box-carousel::before { left:50%!important; right:auto!important; bottom:10%!important; width:min(72vw,820px)!important; height:21%!important; transform:translateX(-50%) perspective(850px) rotateX(68deg)!important; border:1px solid #7771683d!important; border-radius:50%!important; background:repeating-radial-gradient(ellipse at center,transparent 0 18%,#706a6028 18.3% 18.7%,transparent 19% 26%)!important; box-shadow:none!important; backdrop-filter:none!important; }
+.box-carousel::after { left:50%!important; right:auto!important; bottom:5%!important; width:min(45vw,480px)!important; height:14%!important; transform:translateX(-50%)!important; background:#37322a2a!important; filter:blur(20px)!important; }
+.booster-box { width:clamp(250px,32vw,430px)!important; aspect-ratio:.78!important; }
+.booster-box--product { isolation:isolate; }
+.booster-box--product::before,.booster-box--product::after { content:""; position:absolute; z-index:-1; width:39%; aspect-ratio:2 / 3; background:url("/booster-pack-archive-v1.png") center / contain no-repeat; filter:drop-shadow(0 15px 10px #1f1c172d); opacity:.92; }
+.booster-box--product::before { left:-13%; bottom:6%; transform:rotate(-13deg); }
+.booster-box--product::after { right:-13%; bottom:4%; transform:rotate(12deg); }
+.booster-box--product .product-box { inset:0 7%!important; z-index:1; filter:drop-shadow(0 28px 19px #201b1538)!important; }
+.booster-box--coming { pointer-events:auto; }
+.coming-soon-mark { display:grid!important; place-items:center; width:70%!important; height:78%!important; margin:11% auto; border:1px solid #38352e66; color:#e7e4dc!important; background:linear-gradient(145deg,#343330,#111 68%,#272421); box-shadow:inset 0 0 0 6px #ffffff08,0 17px 18px #29251d22; font:.58rem/1.7 ui-monospace,monospace!important; letter-spacing:.22em; }
+.booster-box--coming > span { color:transparent!important; filter:none!important; font-size:0!important; }
+.booster-box--coming > span::before { content:"COMING\A SOON"; white-space:pre; display:grid; place-items:center; width:70%; height:78%; margin:11% auto; border:1px solid #38352e66; color:#e7e4dc; background:linear-gradient(145deg,#343330,#111 68%,#272421); box-shadow:inset 0 0 0 6px #ffffff08,0 17px 18px #29251d22; font:.58rem/1.7 ui-monospace,monospace; letter-spacing:.22em; }
+.carousel-controls { margin:-.1rem 0 .8rem!important; }.selected-box-info { margin-bottom:1rem!important; }
+
+/* Only the released collection belongs on the landing hero for now. */
+.booster-box--coming,
+.carousel-controls,
+.selected-box-info { display: none !important; }
+
+.box-carousel .booster-box--product {
+  left: 50% !important;
+  top: 50% !important;
+  z-index: 4 !important;
+  transform: translate(-50%, -50%) translateY(-9px) scale(1.04) !important;
+  filter: drop-shadow(0 25px 18px #312b201f) !important;
+  animation: landing-product-float 3.2s ease-in-out infinite !important;
+}
+
+@keyframes landing-product-float {
+  0%,100% { transform:translate(-50%,-50%) translateY(-9px) scale(1.04); }
+  50% { transform:translate(-50%,-50%) translateY(-17px) scale(1.04); }
+}
+@media(max-width:700px){.lobby-view{min-height:calc(100svh - 70px)}.lobby-heading h1::before{font-size:clamp(2.15rem,10vw,3.3rem)}.box-carousel{height:min(98vw,430px)!important}.booster-box{width:min(74vw,330px)!important}.booster-box--product::before{left:-8%}.booster-box--product::after{right:-8%}.box-carousel::before{width:100vw!important}}

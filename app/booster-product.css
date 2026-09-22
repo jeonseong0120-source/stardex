@@ -1,19 +1,19 @@
 /* One physical vertical box is used on the shelf and during opening. */
-.product-box{inset:0 15%!important;background:url("/booster-box-vertical-v1.png") center/contain no-repeat!important;transform:none!important;filter:drop-shadow(0 18px 15px #0009)}
+.product-box{inset:0 15%!important;background:url("/booster-box-archive-v1.png") center/contain no-repeat!important;transform:none!important;filter:drop-shadow(0 18px 15px #0009)}
 .product-box__front,.product-box__lid,.product-box__side{display:none!important}
 
 /* The opening stage deliberately contains no second, pre-rendered open-box image. */
 .opening-assembly{width:min(72vw,360px)!important;height:min(108vw,540px)!important;margin:clamp(1.5rem,4vw,3rem) auto 0!important}
-.opening-assembly:before{content:"";position:absolute;z-index:10;inset:0;background:url("/booster-box-vertical-v1.png") center/contain no-repeat;filter:drop-shadow(0 22px 18px #000a)}
+.opening-assembly:before{content:"";position:absolute;z-index:10;inset:0;background:url("/booster-box-archive-v1.png") center/contain no-repeat;filter:drop-shadow(0 22px 18px #000a)}
 .opening-assembly:after{display:none!important}
 .opening-assembly__shadow,.opening-assembly__rear,.opening-assembly__front,.opening-assembly__side,.opening-assembly__pack--two,.opening-assembly__pack--three,.box-opening-copy{display:none!important}
 .opening-assembly__box{z-index:20!important;opacity:1!important;visibility:visible!important;animation:none!important;transform:none!important}
 .opening-assembly__lid{display:none!important}
-.opening-assembly__pack{display:block!important;z-index:20;width:44%!important;height:50%!important;left:28%!important;bottom:18%!important;opacity:0;border:0!important;border-radius:3px;background:url("/booster-pack-v2.png") center/contain no-repeat!important;box-shadow:0 18px 22px #000b!important}
+.opening-assembly__pack{display:block!important;z-index:20;width:44%!important;height:50%!important;left:28%!important;bottom:18%!important;opacity:0;border:0!important;border-radius:3px;background:url("/booster-pack-archive-v1.png") center/contain no-repeat!important;box-shadow:0 18px 22px #000b!important}
 .opening-assembly__pack:after{display:none!important}
 .opening-assembly__pack--one{animation:single-pack-rise 1.2s .5s cubic-bezier(.18,.84,.22,1) forwards!important}
 .opening-assembly__pack--two,.opening-assembly__pack--three{display:none!important;animation:none!important}
 @keyframes single-pack-rise{0%{opacity:0;transform:translateY(88px) scale(.9)}18%{opacity:1}72%{opacity:1;transform:translateY(-178px) scale(1)}100%{opacity:1;transform:translateY(-214px) scale(1.02)}}
 @media(max-width:700px){.product-box{inset:0 12%!important}.opening-assembly{width:min(76vw,340px)!important;height:min(114vw,510px)!important}}
 @media(prefers-reduced-motion:reduce){.opening-assembly__pack--one{opacity:1!important;transform:translateY(-214px) scale(1.02)!important;animation:none!important}}
-.tear-pack__render{content:url("/booster-pack-v2.png")}
+.tear-pack__render{content:url("/booster-pack-archive-v1.png")}

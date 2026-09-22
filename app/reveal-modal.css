@@ -1,0 +1,104 @@
+/* Keep the reveal in the opening room: cards rise as an overlay instead of
+   navigating to a separate results page. */
+.deal-screen {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  justify-items: center;
+  align-items: center;
+  min-height: calc(100svh - 82px);
+  padding: clamp(1.5rem, 3.5vh, 2.75rem) 1.5rem 1.25rem !important;
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(ellipse 55% 45% at 50% 43%, #fff 0%, #f5f3ed 67%, #e9e6de 100%) !important;
+}
+
+.deal-screen::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  left: 50%;
+  bottom: -21%;
+  width: max(960px, 106vw);
+  aspect-ratio: 2.9 / 1;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 0 0;
+  border: 1px solid #c9c5bd55;
+  background:
+    repeating-radial-gradient(ellipse at center bottom, transparent 0 12%, #c5c1ba26 12.2% 12.45%, transparent 12.7% 19%),
+    radial-gradient(ellipse at center top, #262525 0%, #0c0c0c 48%, #030303 78%);
+  box-shadow: 0 -22px 50px #352f251f;
+}
+
+.deal-screen::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: #17151054;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: none;
+}
+
+.deal-screen .eyebrow {
+  margin: 0;
+  color: #686259;
+  font-size: .56rem;
+  letter-spacing: .3em;
+}
+
+.deal-screen h2 {
+  margin: .6rem 0 1rem !important;
+  color: #211f1c !important;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Pretendard", sans-serif !important;
+  font-size: clamp(1.35rem, 2.15vw, 2.05rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: -.045em !important;
+  line-height: 1.1 !important;
+}
+
+.deal-screen h2 i { color: inherit !important; font-family: inherit !important; font-style: normal; }
+
+.deal-screen .reveal-fan {
+  position: relative;
+  z-index: 2;
+  width: min(88vw, 470px);
+  height: min(68vh, 620px);
+  min-height: 390px;
+  margin: 0 auto !important;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.deal-screen .reveal-fan > div {
+  display: grid;
+  place-items: center;
+}
+
+.deal-screen .reveal-card {
+  width: min(71vw, 330px);
+  filter: drop-shadow(16px 25px 20px #0d0d0db0);
+}
+
+.deal-screen .drag-hint {
+  z-index: 2;
+  margin: .75rem 0 0;
+  color: #f2eee6 !important;
+  text-shadow: 0 1px 3px #000;
+}
+
+@media (max-width: 700px) {
+  .deal-screen { min-height: calc(100svh - 70px); padding-inline: 1rem !important; }
+  .deal-screen .reveal-fan { width: min(91vw, 380px); height: min(64vh, 510px); min-height:350px; }
+  .deal-screen .reveal-card { width: min(74vw, 270px); }
+}
+
+/* A modal has no footer: it should be one uninterrupted focused scene. */
+.app-shell:has(.deal-screen) > footer {
+  display: none;
+}

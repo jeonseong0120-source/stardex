@@ -2,9 +2,9 @@ import type { CSSProperties } from "react";
 
 type CardShellProps = { name:string; englishName:string; rarity:string; serial:string; skill:string; flavor:string; artwork?:string; accent:string; palette?:string; compact?:boolean; cardKey?:string };
 
-export function CardBackFace({serial,rarity,accent}:{serial:string;rarity:string;accent:string}){
-  return <article className="tcg-card-back" style={{"--accent":accent} as CSSProperties} aria-label={`${rarity} 카드 뒷면`}>
-    <div className="tcg-card-back__frame"/><span className="tcg-card-back__serial">{serial}</span><div className="tcg-card-back__mark"><i>△</i><b>STARDEX</b><small>CREATOR COLLECTIBLE</small></div><span className="tcg-card-back__rarity">{rarity}</span>
+export function CardBackFace(){
+  return <article className="tcg-card-back tcg-card-back--archive" aria-label="STARDEX 카드 뒷면">
+    <span className="tcg-card-back__frame"/><span className="tcg-card-back__orbit"/><span className="tcg-card-back__star" aria-hidden="true"/><div className="tcg-card-back__mark"><b>STARDEX</b><small>YOUTUBER CREATOR CARD COLLECTION</small></div><span className="tcg-card-back__edition">MORE THAN CARDS. &nbsp; A CULTURE.</span>
   </article>;
 }
 
