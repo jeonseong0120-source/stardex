@@ -17,6 +17,7 @@ import "./br-card.css";
 import "./lobby.css";
 import "./experience-tuning.css";
 import "./luxury-tcg.css";
+import "./showroom-layout.css";
 import { CardShell } from "../components/card-shell";
 import { PointerEvent, useEffect, useMemo, useRef, useState } from "react";
 

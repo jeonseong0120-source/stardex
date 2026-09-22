@@ -3,6 +3,7 @@ import "./gallery.css";
 import "./card-spin.css";
 import "./tcg-shell.css";
 import "./br-card.css";
+import "./showroom-layout.css";
 import { useEffect, useRef, useState } from "react";
 import { CardBackFace, CardShell } from "../components/card-shell";
 
