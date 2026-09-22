@@ -1,5 +1,6 @@
 "use client";
 import "./gallery.css";
+import "./card-spin.css";
 import "./tcg-shell.css";
 import "./br-card.css";
 import { useEffect, useRef, useState } from "react";

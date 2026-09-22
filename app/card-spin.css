@@ -1,0 +1,14 @@
+.gallery-card.is-flipped .gallery-card__inner{
+  animation:gallery-card-spin 1.65s cubic-bezier(.18,.74,.22,1) both;
+}
+
+@keyframes gallery-card-spin{
+  0%{transform:translateZ(0) rotateY(0) scale(1)}
+  10%{transform:translateZ(34px) rotateY(0) scale(1.035)}
+  55%{transform:translateZ(42px) rotateY(900deg) scale(1.035)}
+  100%{transform:translateZ(0) rotateY(1440deg) scale(1)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .gallery-card.is-flipped .gallery-card__inner{animation-duration:.01ms}
+}
