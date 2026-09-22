@@ -21,7 +21,7 @@ type Rarity = "COMMON" | "RARE" | "SUPER RARE" | "SECRET RARE" | "UR" | "BR" | "
 type Card = { no:string; name:string; rarity:Rarity; flavor:string; scene:string; palette:string };
 type Opening = "shop" | "box" | "tear" | "deal" | "result";
 const cards:Card[]=[
-  {no:"001",name:"침착맨",rarity:"BR",flavor:"방구석 토크",scene:"왕좌와 펜, 무표정의 명언",palette:"royal"},{no:"002",name:"랄로",rarity:"SUPER RARE",flavor:"주식과 무지개 무드",scene:"화면 너머, 해탈한 표정",palette:"rainbow"},{no:"003",name:"곽튜브",rarity:"SUPER RARE",flavor:"세계 로컬 식사",scene:"낯선 도시의 식탁",palette:"sunset"},{no:"004",name:"빠더너스",rarity:"SUPER RARE",flavor:"한국 지리 문쌤",scene:"칠판 앞의 능청스러운 한 컷",palette:"chalk"},{no:"005",name:"감스트",rarity:"SUPER RARE",flavor:"축구치킨 광기",scene:"골이 터진 직후의 세레머니",palette:"stadium"},{no:"006",name:"피식대학",rarity:"RARE",flavor:"성수동 바이브",scene:"레트로 셔츠와 도시의 밤",palette:"retro"},{no:"007",name:"숏박스",rarity:"SUPER RARE",flavor:"현실 연애 콩트",scene:"차 안의 아주 현실적인 대화",palette:"drive"},{no:"008",name:"지무비",rarity:"UR",flavor:"결말 포함 영화",scene:"필름과 스크린 사이",palette:"film"},{no:"009",name:"말왕",rarity:"SUPER RARE",flavor:"3대 500 괴력",scene:"철과 숨소리만 남은 체육관",palette:"gym"},{no:"010",name:"보겸",rarity:"SUPER RARE",flavor:"근황 올림픽",scene:"카메라를 향한 한 번의 인사",palette:"flash"},{no:"011",name:"떵개떵",rarity:"SUPER RARE",flavor:"소리 없는 아우성",scene:"가득 찬 식탁의 ASMR",palette:"table"},{no:"012",name:"윤가놈",rarity:"SUPER RARE",flavor:"포켓몬 마스터의 기행",scene:"몬스터볼과 이해할 수 없는 가설",palette:"monster"}
+  {no:"001",name:"침착맨",rarity:"BR",flavor:"방구석 토크",scene:"왕좌와 펜, 무표정의 명언",palette:"royal"},{no:"002",name:"랄로",rarity:"SUPER RARE",flavor:"주식과 무지개 무드",scene:"화면 너머, 해탈한 표정",palette:"rainbow"},{no:"003",name:"곽튜브",rarity:"RARE",flavor:"세계 로컬 식사",scene:"낯선 도시의 식탁",palette:"sunset"},{no:"004",name:"빠더너스",rarity:"SUPER RARE",flavor:"한국 지리 문쌤",scene:"칠판 앞의 능청스러운 한 컷",palette:"chalk"},{no:"005",name:"감스트",rarity:"SUPER RARE",flavor:"축구치킨 광기",scene:"골이 터진 직후의 세레머니",palette:"stadium"},{no:"006",name:"피식대학",rarity:"RARE",flavor:"성수동 바이브",scene:"레트로 셔츠와 도시의 밤",palette:"retro"},{no:"007",name:"숏박스",rarity:"SUPER RARE",flavor:"현실 연애 콩트",scene:"차 안의 아주 현실적인 대화",palette:"drive"},{no:"008",name:"지무비",rarity:"UR",flavor:"결말 포함 영화",scene:"필름과 스크린 사이",palette:"film"},{no:"009",name:"말왕",rarity:"SUPER RARE",flavor:"3대 500 괴력",scene:"철과 숨소리만 남은 체육관",palette:"gym"},{no:"010",name:"보겸",rarity:"RARE",flavor:"근황 올림픽",scene:"카메라를 향한 한 번의 인사",palette:"flash"},{no:"011",name:"떵개떵",rarity:"RARE",flavor:"소리 없는 아우성",scene:"가득 찬 식탁의 ASMR",palette:"table"},{no:"012",name:"윤가놈",rarity:"SUPER RARE",flavor:"포켓몬 마스터의 기행",scene:"몬스터볼과 이해할 수 없는 가설",palette:"monster"}
 ];
 cards.push(
   {no:"013",name:"주둥이방송 C",rarity:"COMMON",flavor:"방송의 시작",scene:"가장 담백한 한 장면",palette:"chalk"},
@@ -33,19 +33,19 @@ cards.push(
 );
 cards.push({no:"019",name:"미미미누 C",rarity:"COMMON",flavor:"공부 콘텐츠",scene:"담백한 응원의 한마디",palette:"chalk"},{no:"020",name:"쯔앙 C",rarity:"COMMON",flavor:"밝은 한 끼",scene:"오늘도 맛있는 순간",palette:"table"},{no:"021",name:"곽튜브 C",rarity:"COMMON",flavor:"여행의 시작",scene:"낯선 곳으로 떠난다",palette:"sunset"});
 cards.push(
-  {no:"022",name:"김규남",rarity:"SUPER RARE",flavor:"구름 위의 토끼",scene:"포근한 하늘에서 건네는 인사",palette:"sky"},
+  {no:"022",name:"김규남",rarity:"RARE",flavor:"구름 위의 토끼",scene:"포근한 하늘에서 건네는 인사",palette:"sky"},
   {no:"023",name:"김계란",rarity:"SUPER RARE",flavor:"붉은 달의 수련",scene:"핏빛 달 아래에서 단련한다",palette:"crimson"},
   {no:"024",name:"엄지윤",rarity:"SUPER RARE",flavor:"블루문 서포터",scene:"경기장의 함성과 함께 달린다",palette:"stadium"},
-  {no:"025",name:"슈기",rarity:"SUPER RARE",flavor:"치킨 테이블",scene:"가장 맛있는 한 입을 고른다",palette:"table"},
-  {no:"026",name:"룩삼",rarity:"SUPER RARE",flavor:"심야 스트리밍",scene:"화면 너머의 순간을 함께 웃는다",palette:"night"},
-  {no:"027",name:"유후",rarity:"SUPER RARE",flavor:"창가의 멜로디",scene:"햇살과 함께 다음 곡을 기다린다",palette:"sunset"},
+  {no:"025",name:"슈기",rarity:"RARE",flavor:"치킨 테이블",scene:"가장 맛있는 한 입을 고른다",palette:"table"},
+  {no:"026",name:"룩삼",rarity:"RARE",flavor:"심야 스트리밍",scene:"화면 너머의 순간을 함께 웃는다",palette:"night"},
+  {no:"027",name:"유후",rarity:"RARE",flavor:"창가의 멜로디",scene:"햇살과 함께 다음 곡을 기다린다",palette:"sunset"},
   {no:"028",name:"유후(각성)",rarity:"SUPER RARE",flavor:"각성의 협주곡",scene:"무대 위 모든 음을 깨운다",palette:"arcane"},
-  {no:"029",name:"주우재",rarity:"SUPER RARE",flavor:"미니멀 룩",scene:"가장 담백한 실루엣을 완성한다",palette:"mono"},
+  {no:"029",name:"주우재",rarity:"RARE",flavor:"미니멀 룩",scene:"가장 담백한 실루엣을 완성한다",palette:"mono"},
   {no:"030",name:"카더가든",rarity:"MR",flavor:"보랏빛 마도서",scene:"별과 이야기 사이에서 노래를 꺼낸다",palette:"mythic"},
   {no:"031",name:"장삐쭈",rarity:"SUPER RARE",flavor:"컷의 지배자",scene:"수많은 장면 속에서 이야기를 완성한다",palette:"ink"},
   {no:"032",name:"혜안",rarity:"SUPER RARE",flavor:"노을의 경계",scene:"황혼의 전장에서도 시선을 놓지 않는다",palette:"ember"},
   {no:"033",name:"궤도",rarity:"SUPER RARE",flavor:"우주의 강의",scene:"별과 공식 사이로 답을 이끈다",palette:"cosmos"},
-  {no:"034",name:"고재영",rarity:"SUPER RARE",flavor:"정상에서의 인사",scene:"구름 위에서 다음 길을 바라본다",palette:"summit"},
+  {no:"034",name:"고재영",rarity:"RARE",flavor:"정상에서의 인사",scene:"구름 위에서 다음 길을 바라본다",palette:"summit"},
   {no:"035",name:"우정잉",rarity:"SUPER RARE",flavor:"바리스타의 마법",scene:"한 잔의 커피로 공기를 바꾼다",palette:"coffee"},
   {no:"036",name:"괴물쥐",rarity:"SUPER RARE",flavor:"역전의 한타",scene:"결정적 순간을 화면 너머로 끌어온다",palette:"arena"},
   {no:"037",name:"괴물쥐(연패)",rarity:"MR",flavor:"녹빛 연패",scene:"끝없는 패배의 밤도 결국 이야기로 남긴다",palette:"verdant"},
@@ -53,14 +53,14 @@ cards.push(
   {no:"039",name:"붉은머리 랄로",rarity:"MR",flavor:"조커의 패",scene:"붉은 기운으로 판을 뒤집는다",palette:"crimson"},
   {no:"040",name:"핫소스",rarity:"SUPER RARE",flavor:"옐로 파티",scene:"장난기 가득한 순간을 함께 쏜다",palette:"sunny"},
   {no:"041",name:"임우일",rarity:"SUPER RARE",flavor:"골목의 사나이",scene:"낯선 골목에서도 자기 리듬을 지킨다",palette:"alley"},
-  {no:"042",name:"흑자헬스",rarity:"SUPER RARE",flavor:"철의 호흡",scene:"땀과 무게로 자신을 증명한다",palette:"iron"},
+  {no:"042",name:"흑자헬스",rarity:"RARE",flavor:"철의 호흡",scene:"땀과 무게로 자신을 증명한다",palette:"iron"},
   {no:"043",name:"말왕",rarity:"MR",flavor:"블록의 왕",scene:"픽셀 세계에서도 가장 큰 한 방을 든다",palette:"pixel"},
-  {no:"044",name:"미미미누",rarity:"SUPER RARE",flavor:"새벽의 공부",scene:"고요한 새벽에도 답을 찾는다",palette:"study"},
+  {no:"044",name:"미미미누",rarity:"RARE",flavor:"새벽의 공부",scene:"고요한 새벽에도 답을 찾는다",palette:"study"},
   {no:"045",name:"미미미누",rarity:"SUPER RARE",flavor:"붉은 망토",scene:"자신만의 깃발 아래 앞으로 나아간다",palette:"royal"},
-  {no:"046",name:"흑자헬스",rarity:"SUPER RARE",flavor:"장인의 손",scene:"나무와 땀으로 다음 한계를 만든다",palette:"workshop"},
+  {no:"046",name:"흑자헬스",rarity:"RARE",flavor:"장인의 손",scene:"나무와 땀으로 다음 한계를 만든다",palette:"workshop"},
   {no:"047",name:"픽고에겐남",rarity:"SUPER RARE",flavor:"햇살의 미소",scene:"밝은 한마디로 하루를 채운다",palette:"sunrise"},
-  {no:"048",name:"조진세",rarity:"SUPER RARE",flavor:"생활관의 예술",scene:"평범한 하루도 자기 방식으로 버틴다",palette:"barracks"},
-  {no:"049",name:"김원훈",rarity:"SUPER RARE",flavor:"옥상의 한숨",scene:"도시의 노을 아래 다음 장면을 기다린다",palette:"rooftop"}
+  {no:"048",name:"조진세",rarity:"RARE",flavor:"생활관의 예술",scene:"평범한 하루도 자기 방식으로 버틴다",palette:"barracks"},
+  {no:"049",name:"김원훈",rarity:"RARE",flavor:"옥상의 한숨",scene:"도시의 노을 아래 다음 장면을 기다린다",palette:"rooftop"}
 );
 const artwork:Record<string,string>={침착맨:"/cards/chimchakman-super-rare-art.png",랄로:"/cards/ralo-super-rare-art.png",곽튜브:"/cards/kwaktube-art-rare-art.png",빠더너스:"/cards/moonsanghoon-super-rare-art.png",감스트:"/cards/gamst-super-rare-art.png",피식대학:"/cards/psick-univ-rare-art.png",숏박스:"/cards/shortbox-art-rare-art.png",지무비:"/cards/gmovie-ultra-rare-art.png",말왕:"/cards/malwang-super-rare-art.png",보겸:"/cards/bokyem-super-rare-art.png",떵개떵:"/cards/tteong-art-rare-art.png",윤가놈:"/cards/yoonganom-super-rare-art.png"};
 const completed:Record<string,string>={};
