@@ -138,7 +138,8 @@ function CardBack({index,flipped,children}:{index:number;flipped:boolean;childre
 export default function Home(){
   const [coin,setCoin]=useState(3000),[pulls,setPulls]=useState<Card[]>([]),[opening,setOpening]=useState<Opening>("shop"),[pack,setPack]=useState<Card[]>([]),[flipped,setFlipped]=useState<number[]>([]),[revealing,setRevealing]=useState(false),[view,setView]=useState<"shop"|"collection">("shop"),[drag,setDrag]=useState(0); const start=useRef(0);
   const owned=useMemo(()=>new Set(pulls.map(c=>c.no)),[pulls]);
-  const draw=()=>cards[Math.floor(Math.random()*cards.length)];
+  const rarityWeights:Record<Rarity,number>={COMMON:30,RARE:23,"SUPER RARE":23,MR:10,UR:8,BR:6,"SECRET RARE":0};
+  const draw=()=>{const available=(Object.entries(rarityWeights) as [Rarity,number][]).filter(([,weight])=>weight>0);const roll=Math.random()*available.reduce((sum,[,weight])=>sum+weight,0);let cursor=0;const rarity=available.find(([ ,weight])=>(cursor+=weight)>roll)?.[0]||"COMMON";const pool=cards.filter(card=>card.rarity===rarity);return pool[Math.floor(Math.random()*pool.length)]||cards[0]};
   const buy=()=>{if(coin<1)return;const rarityOrder:Record<Rarity,number>={COMMON:0,RARE:1,"SUPER RARE":2,MR:3,UR:4,BR:5,"SECRET RARE":2};const nextPack=[draw(),draw(),draw(),draw(),draw()].sort((a,b)=>rarityOrder[a.rarity]-rarityOrder[b.rarity]);setCoin(v=>v-1);setPack(nextPack);setFlipped([]);setDrag(0);setOpening("tear")};
 useEffect(()=>{if(opening!=="box")return;const timer=window.setTimeout(()=>setOpening("tear"),3200);return()=>window.clearTimeout(timer)},[opening]);
   const begin=(e:PointerEvent<HTMLDivElement>)=>{start.current=e.clientY;e.currentTarget.setPointerCapture(e.pointerId)};
