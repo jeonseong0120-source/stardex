@@ -103,6 +103,7 @@ cards.push(
   {no:"078",name:"윤가놈 C",rarity:"COMMON",flavor:"반전의 엄지",scene:"한 번의 표정으로 분위기를 바꾼다",palette:"mono"},
   {no:"079",name:"쿠빈",rarity:"SUPER RARE",flavor:"보랏빛 라이브",scene:"심야의 조명 아래 자신만의 리듬을 만든다",palette:"neon"}
 );
+cards.push({no:"080",name:"뜨뜨뜨뜨",rarity:"MR",flavor:"망령의 검",scene:"푸른 망령의 불꽃을 두른 채 어둠을 가른다",palette:"cosmos"});
 const artwork:Record<string,string>={침착맨:"/cards/chimchakman-super-rare-art.png",랄로:"/cards/ralo-super-rare-art.png",곽튜브:"/cards/kwaktube-art-rare-art.png",빠더너스:"/cards/moonsanghoon-super-rare-art.png",감스트:"/cards/gamst-super-rare-art.png",피식대학:"/cards/psick-univ-rare-art.png",숏박스:"/cards/shortbox-art-rare-art.png",지무비:"/cards/gmovie-ultra-rare-art.png",말왕:"/cards/malwang-super-rare-art.png",보겸:"/cards/bokyem-super-rare-art.png",떵개떵:"/cards/tteong-art-rare-art.png",윤가놈:"/cards/yoonganom-super-rare-art.png"};
 const completed:Record<string,string>={};
 const english:Record<string,string>={침착맨:"CHIMCHAKMAN",랄로:"RALO",곽튜브:"KWAK TUBE",빠더너스:"BDNS",감스트:"GAMST",피식대학:"PSICK UNIV.",숏박스:"SHORT BOX",지무비:"G MOVIE",말왕:"MALWANG",보겸:"BOKYEM",떵개떵:"TTEONG",윤가놈:"YOONGANOM"};
@@ -128,6 +129,9 @@ Object.assign(descriptions,{"061":"게임과 웃음이 가득한 거실에서 �
 Object.assign(artwork,{"077":"/cards/ppogumi-super-rare-art.png","078":"/cards/yoonganom-common-art.png","079":"/cards/koobin-super-rare-art.png"});
 Object.assign(english,{"077":"PPOGUMI","078":"YOONGANOM","079":"KOOBIN"});
 Object.assign(descriptions,{"077":"가득한 응원 속에서 화면 너머로 다정하게 손을 뻗는다.","078":"한 번의 표정으로 오늘의 분위기를 바꾼다.","079":"보랏빛 라이브 속에서 자신만의 리듬을 만든다."});
+Object.assign(artwork,{"080":"/cards/ttetteu-mythic-rare-art.png"});
+Object.assign(english,{"080":"TTEUTTEUTTEU"});
+Object.assign(descriptions,{"080":"푸른 망령의 불꽃을 두른 채 어둠을 가른다."});
 const accents:Record<Rarity,string>={"SECRET RARE":"#e8b8ff","SUPER RARE":"#ff8ca5","RARE":"#78bafc","COMMON":"#c3c6d2",UR:"#f6c65c",BR:"#24242b",MR:"#c59aff"};
 function CardFace({card,serial,small=false}:{card:Card;serial:number;small?:boolean}){const serialNo=`STX-YT01-${card.no}-${String(serial).padStart(6,"0")}`;if(completed[card.name])return <article className={`tcg-complete ${small?"tcg-complete--compact":""}`}><img src={completed[card.name]} alt={`${card.name} 완성 카드`}/></article>;return <CardShell cardKey={card.no} name={displayTitles[card.no]||displayTitles[card.name]||card.name} englishName={english[card.no]||english[card.name]} rarity={card.rarity} serial={serialNo} skill={card.flavor} flavor={descriptions[card.no]||descriptions[card.name]||"크리에이터의 한 장면을 기록한 STARDEX 카드."} artwork={artwork[card.no]||artwork[card.name]} accent={accents[card.rarity]} palette={card.palette}/>}
 function CardBack({index,flipped,children}:{index:number;flipped:boolean;children:React.ReactNode}){return <button className={`reveal-card ${flipped?"flipped":""}`} style={{"--i":index} as React.CSSProperties} aria-label={`${index+1}번째 카드 공개`}><span className="reveal-inner"><span className="card-back"><CardBackFace/></span><span className="card-front">{children}</span></span></button>}
