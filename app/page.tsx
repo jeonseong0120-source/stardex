@@ -1,5 +1,6 @@
 "use client";
 import "./opening.css";
+import "./pack-rarity-effects.css";
 import "./booster-product.css";
 import "./pack.css";
 import "./depth.css";
@@ -96,7 +97,7 @@ const accents:Record<Rarity,string>={"SECRET RARE":"#e8b8ff","SUPER RARE":"#ff8c
 function CardFace({card,serial,small=false}:{card:Card;serial:number;small?:boolean}){const serialNo=`STX-YT01-${card.no}-${String(serial).padStart(6,"0")}`;if(completed[card.name])return <article className={`tcg-complete ${small?"tcg-complete--compact":""}`}><img src={completed[card.name]} alt={`${card.name} 완성 카드`}/></article>;return <CardShell cardKey={card.no} name={displayTitles[card.no]||displayTitles[card.name]||card.name} englishName={english[card.no]||english[card.name]} rarity={card.rarity} serial={serialNo} skill={card.flavor} flavor={descriptions[card.no]||descriptions[card.name]||"크리에이터의 한 장면을 기록한 STARDEX 카드."} artwork={artwork[card.no]||artwork[card.name]} accent={accents[card.rarity]} palette={card.palette}/>}
 function CardBack({index,flipped,children}:{index:number;flipped:boolean;children:React.ReactNode}){return <button className={`reveal-card ${flipped?"flipped":""}`} style={{"--i":index} as React.CSSProperties} aria-label={`${index+1}번째 카드 공개`}><span className="reveal-inner"><span className="card-back"><b>STARDEX</b><i>✦</i><small>YOUTUBE CREATORS · VOL.01</small></span><span className="card-front">{children}</span></span></button>}
 export default function Home(){
-  const [coin,setCoin]=useState(3000),[pulls,setPulls]=useState<Card[]>([]),[opening,setOpening]=useState<Opening>("shop"),[pack,setPack]=useState<Card[]>([]),[flipped,setFlipped]=useState<number[]>([]),[view,setView]=useState<"shop"|"collection">("shop"),[drag,setDrag]=useState(0); const start=useRef(0);
+  const [coin,setCoin]=useState(3000),[pulls,setPulls]=useState<Card[]>([]),[opening,setOpening]=useState<Opening>("shop"),[pack,setPack]=useState<Card[]>([]),[flipped,setFlipped]=useState<number[]>([]),[revealing,setRevealing]=useState(false),[view,setView]=useState<"shop"|"collection">("shop"),[drag,setDrag]=useState(0); const start=useRef(0);
   const owned=useMemo(()=>new Set(pulls.map(c=>c.no)),[pulls]);
   const draw=()=>cards[Math.floor(Math.random()*cards.length)];
   const buy=()=>{if(coin<1)return;setCoin(v=>v-1);setPack([draw(),draw(),draw(),draw(),draw()]);setFlipped([]);setDrag(0);setOpening("tear")};
@@ -104,7 +105,7 @@ useEffect(()=>{if(opening!=="box")return;const timer=window.setTimeout(()=>setOp
   const begin=(e:PointerEvent<HTMLDivElement>)=>{start.current=e.clientY;e.currentTarget.setPointerCapture(e.pointerId)};
   const move=(e:PointerEvent<HTMLDivElement>)=>{if(!start.current)return;const next=Math.max(0,Math.min(100,(start.current-e.clientY)*1.25));setDrag(next);if(next>=100){start.current=0;setTimeout(()=>setOpening("deal"),180)}};
   const end=()=>{if(drag<100)setDrag(0);start.current=0};
-  const flip=(index:number)=>{if(flipped.includes(index))return;const next=[...flipped,index];setFlipped(next);if(["SUPER RARE","SECRET RARE","UR","BR"].includes(pack[index].rarity))document.body.classList.add("rare-flash");setTimeout(()=>document.body.classList.remove("rare-flash"),700);if(next.length===5){setPulls(v=>[...v,...pack]);setTimeout(()=>setOpening("result"),800)}};
+  const flip=(index:number)=>{if(revealing||flipped.includes(index))return;const next=[...flipped,index],rarity=pack[index].rarity,effect=rarity==="SUPER RARE"?"pull-sr":rarity==="MR"?"pull-mr":rarity==="UR"?"pull-ur":rarity==="BR"?"pull-br":"";setRevealing(true);setFlipped(next);if(effect)document.body.classList.add(effect);const duration=rarity==="BR"?2700:2000;setTimeout(()=>{if(effect)document.body.classList.remove(effect);setRevealing(false)},duration);if(next.length===5){setPulls(v=>[...v,...pack]);setTimeout(()=>setOpening("result"),duration+120)}};
   const reset=()=>{setOpening("shop");setPack([]);setFlipped([])};
   return <main className="app-shell"><nav className="topbar"><a className="logo" href="#top" onClick={()=>{setView("shop");reset()}}>STARDEX</a><div className="nav-links"><button className={view==="shop"?"active":""} onClick={()=>{setView("shop");reset()}}>PACK SHOP</button><button className={view==="collection"?"active":""} onClick={()=>setView("collection")}>COLLECTION <em>{owned.size}/{cards.length}</em></button></div><div className="balance"><span>◇</span>{coin.toLocaleString()} COIN</div></nav>{view==="collection"?<Collection owned={owned}/>:opening==="shop"?<Shop coin={coin} buy={buy}/>:<OpeningFlow mode={opening} pack={pack} drag={drag} flipped={flipped} begin={begin} move={move} end={end} flip={flip} reset={reset} owned={owned}/>}<footer>STARDEX is a non-commercial fan project. © 2026</footer></main>
 }
