@@ -1,0 +1,36 @@
+/* Detail cards keep their gallery presence on wide displays without crowding the frame. */
+@media (min-width: 651px) {
+  .gallery-card { width: min(74vw, 460px); }
+}
+
+/* The selected pack gets a restrained suspended-in-air motion. */
+.booster-box.is-selected {
+  animation: selected-pack-float 3.2s ease-in-out infinite;
+}
+@keyframes selected-pack-float {
+  0%,100% { transform: translate(-50%,-50%) translateY(-8px) translateZ(0) rotateY(0) rotateZ(0) scale(1.04); }
+  50% { transform: translate(-50%,-50%) translateY(-14px) translateZ(0) rotateY(0) rotateZ(0) scale(1.04); }
+}
+
+/* High-rarity cards briefly telegraph their colour while still face-down. */
+body.pull-mr .reveal-card:not(.flipped) { animation: mythic-tease .65s ease-in-out both; }
+body.pull-ur .reveal-card:not(.flipped) { animation: ultra-tease .85s ease-in-out both; }
+body.pull-br .reveal-card:not(.flipped) { animation: black-tease 1s cubic-bezier(.2,.75,.25,1) both; }
+@keyframes mythic-tease {
+  0%,100% { filter: drop-shadow(16px 22px 17px #0009) drop-shadow(0 0 0 #9b5cff00); }
+  35%,65% { transform: translateX(-2px) rotate(-.35deg); filter: drop-shadow(16px 22px 17px #0009) drop-shadow(0 0 32px #9b5cff); }
+  50% { transform: translateX(3px) rotate(.35deg); }
+}
+@keyframes ultra-tease {
+  0%,100% { filter: drop-shadow(16px 22px 17px #0009) drop-shadow(0 0 0 #f6c65c00); }
+  32%,70% { transform: translateX(-2px) rotate(-.3deg); filter: drop-shadow(16px 22px 17px #0009) drop-shadow(0 0 38px #f6c65c); }
+  51% { transform: translateX(3px) rotate(.3deg); }
+}
+@keyframes black-tease {
+  0%,100% { filter: drop-shadow(16px 22px 17px #0009); }
+  42%,68% { transform:translateY(1px) scale(1.012); filter:drop-shadow(16px 22px 17px #000) drop-shadow(0 0 26px #14131d); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booster-box.is-selected, body.pull-mr .reveal-card:not(.flipped), body.pull-ur .reveal-card:not(.flipped), body.pull-br .reveal-card:not(.flipped) { animation: none; }
+}
