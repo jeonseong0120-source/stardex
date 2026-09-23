@@ -4,8 +4,8 @@
 .lobby-heading .eyebrow { margin:0 0 .85rem; color:#68635b; font-size:.56rem; letter-spacing:.34em; }
 .lobby-heading h1 { margin:0!important; color:#171615!important; font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Pretendard",sans-serif!important; font-size:0!important; font-weight:360!important; letter-spacing:-.065em!important; line-height:.92!important; text-shadow:none!important; }
 .lobby-heading h1 i { display:none; }
-.lobby-heading h1::before { content:"YOUR CREATOR.\A YOUR CARD."; white-space:pre; font-size:clamp(2.45rem,5.25vw,5.2rem); line-height:.92; }
-.box-carousel { width:min(100%,1120px)!important; height:clamp(370px,39vw,540px)!important; margin-top:clamp(.6rem,2vh,1.5rem)!important; filter:none!important; }
+.lobby-heading h1::before { content:"CHOOSE A PACK."; white-space:pre; font-size:clamp(2.45rem,5.25vw,5.2rem); line-height:.92; }
+.box-carousel { width:min(100%,1120px)!important; height:clamp(370px,39vw,540px)!important; margin-top:clamp(2rem,5vh,4rem)!important; filter:none!important; }
 .box-carousel::before { left:50%!important; right:auto!important; bottom:10%!important; width:min(72vw,820px)!important; height:21%!important; transform:translateX(-50%) perspective(850px) rotateX(68deg)!important; border:1px solid #7771683d!important; border-radius:50%!important; background:repeating-radial-gradient(ellipse at center,transparent 0 18%,#706a6028 18.3% 18.7%,transparent 19% 26%)!important; box-shadow:none!important; backdrop-filter:none!important; }
 .box-carousel::after { left:50%!important; right:auto!important; bottom:5%!important; width:min(45vw,480px)!important; height:14%!important; transform:translateX(-50%)!important; background:#37322a2a!important; filter:blur(20px)!important; }
 .booster-box { width:clamp(250px,32vw,430px)!important; aspect-ratio:.78!important; }

@@ -16,3 +16,4 @@
 .gallery-card.is-flipped:has(.tcg-shell--mr)::after,.gallery-card.is-flipped:has(.tcg-shell--ur)::after{content:"";inset:0;opacity:0;background:none;animation:none}
 @keyframes card-glitter{0%{opacity:0;transform:scale(.88)}26%{opacity:.9}58%{opacity:.34;transform:scale(1.03)}100%{opacity:0;transform:scale(1.08)}}
 .gallery-showcase-add{min-width:210px;padding:.85rem 1rem;border:1px solid #e7e0f5;background:#f5f1ff;color:#17131e;font-size:.6rem;font-weight:700;letter-spacing:.16em;cursor:pointer;box-shadow:0 8px 22px #0004}.gallery-showcase-add span{margin-left:.8rem}
+.gallery-value{display:grid;gap:.3rem;margin:0;color:#fff9ec;font:600 1rem Georgia,serif;letter-spacing:.04em;text-shadow:0 2px 16px #000}.gallery-value span{color:#c7bdaf;font:400 .48rem monospace;letter-spacing:.18em}

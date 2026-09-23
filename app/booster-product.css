@@ -17,3 +17,7 @@
 @media(max-width:700px){.product-box{inset:0 12%!important}.opening-assembly{width:min(76vw,340px)!important;height:min(114vw,510px)!important}}
 @media(prefers-reduced-motion:reduce){.opening-assembly__pack--one{opacity:1!important;transform:translateY(-214px) scale(1.02)!important;animation:none!important}}
 .tear-pack__render{content:url("/booster-pack-archive-v1.png")}
+
+.opening-screen--moe .tear-pack__render{content:url("/moe-booster-pack-v2.png")}
+.box-opening-screen--moe .opening-assembly:before{background-image:url("/moe-collection-product-v2.png")}
+.box-opening-screen--moe .opening-assembly__pack{background-image:url("/moe-booster-pack-v2.png")!important}
