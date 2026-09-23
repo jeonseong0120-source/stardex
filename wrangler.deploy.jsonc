@@ -1,0 +1,12 @@
+{
+  "name": "stardex",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2026-05-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": { "directory": "dist/client" },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "stardex-db",
+    "database_id": "7863aafa-cc88-427d-8ca1-afdfc805f8d3"
+  }]
+}
