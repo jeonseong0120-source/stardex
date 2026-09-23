@@ -21,6 +21,7 @@
 - 나인테일 암수 카드의 아트워크 매핑 오류를 수정했다. 여성 098은 `moe-ninetales-f-sr.png`, 남성 099는 `moe-ninetales-m-sr.png`다.
 - 상단 네비게이션에 로그인 버튼을 통합했고, 랜딩 페이지는 라벤더/화이트 아이보리 테마를 유지한다.
 - `npm run build`가 통과한 상태다.
+- 배포 설정의 D1 바인딩은 `stardex-db` / `7863aafa-cc88-427d-8ca1-afdfc805f8d3`를 사용한다. `vite.config.ts`와 `wrangler.deploy.jsonc`의 값을 항상 일치시킨다.
 
 ## 작업 규칙
 
