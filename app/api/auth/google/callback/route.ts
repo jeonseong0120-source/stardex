@@ -11,6 +11,7 @@ function cookie(request: Request, name: string) {
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
+  const secure = requestUrl.protocol === "https:" ? "; Secure" : "";
   const code = requestUrl.searchParams.get("code");
   const state = requestUrl.searchParams.get("state");
   if (!code || !state || state !== cookie(request, "oauth_state")) {
@@ -35,5 +36,8 @@ export async function GET(request: Request) {
   else await db.insert(users).values({ id, googleSub: profile.sub, email: profile.email, name: profile.name ?? profile.email, avatarUrl: profile.picture ?? null }).run();
   const sessionId = crypto.randomUUID();
   await db.insert(sessions).values({ id: sessionId, userId: id, expiresAt: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30 }).run();
-  return new Response(null, { status: 302, headers: { Location: "/", "Set-Cookie": [`session=${sessionId}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=2592000`, "oauth_state=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0"].join(", ") } });
+  const headers = new Headers({ Location: "/" });
+  headers.append("Set-Cookie", `session=${sessionId}; HttpOnly${secure}; SameSite=Lax; Path=/; Max-Age=2592000`);
+  headers.append("Set-Cookie", `oauth_state=; HttpOnly${secure}; SameSite=Lax; Path=/; Max-Age=0`);
+  return new Response(null, { status: 302, headers });
 }

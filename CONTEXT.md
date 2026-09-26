@@ -21,6 +21,7 @@
 - 동일한 번호를 `app/gallery-enhancer.tsx`의 `cardMap`에 등록해 카드 상세 회전/뒤집기 뷰어에서 사용할 수 있다.
 - 나인테일 암수 카드의 아트워크 매핑 오류를 수정했다. 여성 098은 `moe-ninetales-f-sr.png`, 남성 099는 `moe-ninetales-m-sr.png`다.
 - 상단 네비게이션에 로그인 버튼을 통합했고, 랜딩 페이지는 라벤더/화이트 아이보리 테마를 유지한다.
+- 로그인 모달은 `createPortal(..., document.body)`로 렌더링한다. 상단 바의 `backdrop-filter` 내부에 두면 fixed 모달이 상단 바로 잘린다.
 - `npm run build`가 통과한 상태다.
 - 배포 설정의 D1 바인딩은 `stardex-db` / `7863aafa-cc88-427d-8ca1-afdfc805f8d3`를 사용한다. `vite.config.ts`와 `wrangler.deploy.jsonc`의 값을 항상 일치시킨다.
 
@@ -30,6 +31,9 @@
 - 카드 번호와 사용자가 요청한 순서를 먼저 대조하고, 아트워크 파일명까지 확인한다.
 - 변경 후 `npm run build`를 실행한다.
 - 인증 키나 로컬 비밀값이 들어 있는 `.dev.vars`는 커밋하지 않는다.
+- Google OAuth 클라이언트 변경 시 `.dev.vars`와 Cloudflare Worker 시크릿을 함께 교체하고, 브랜딩 이름은 Google 인증 플랫폼에서 관리한다.
+- OAuth 쿠키는 HTTPS 배포에서는 `Secure`를 유지하고, `http://localhost` 개발 환경에서는 생략해야 로컬 로그인 세션이 저장된다.
+- 로그인 모달은 랜딩 페이지와 같은 아이보리 톤으로 유지하며, 로그인 상태에서는 계정 정보와 명시적인 로그아웃 동작을 제공한다.
 - 작업 완료 시 이 파일의 `현재 상태`와 검증 명령을 갱신한다.
 
 ## 검증
