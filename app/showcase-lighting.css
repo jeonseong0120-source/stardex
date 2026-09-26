@@ -1,0 +1,13 @@
+/* High-rarity cards are lit from below, like display plinths in a gallery. */
+.showcase-room .toploader:has(.tcg-shell--mr) {
+  background: radial-gradient(ellipse 100% 58% at 50% 112%, #a746ffdc 0%, #8b45dc91 34%, transparent 74%), linear-gradient(160deg, #fdfaff 0%, #e6d5f28c 61%, #9d6bc75e 100%) !important;
+  box-shadow: 0 24px 48px #8b3ce792, 0 8px 22px #4f216443, inset 0 0 0 2px #fbecffdb, inset 0 -42px 52px #9b4ae172 !important;
+}
+.showcase-room .toploader:has(.tcg-shell--ur) {
+  background: radial-gradient(ellipse 100% 58% at 50% 112%, #ffb52ee5 0%, #df9a2d94 36%, transparent 74%), linear-gradient(160deg, #fffdf3 0%, #fae7ad8d 61%, #d999365f 100%) !important;
+  box-shadow: 0 24px 48px #e29b218f, 0 8px 22px #75471740, inset 0 0 0 2px #fff7d6e0, inset 0 -42px 52px #f2ae3175 !important;
+}
+.showcase-room .toploader:has(.tcg-shell--br) {
+  background: radial-gradient(ellipse 100% 58% at 50% 112%, #9fc6ffdf 0%, #728bb79a 36%, transparent 74%), linear-gradient(160deg, #f9fbff 0%, #d5ddec90 61%, #7a8eae63 100%) !important;
+  box-shadow: 0 24px 48px #627ca595, 0 8px 22px #38496444, inset 0 0 0 2px #f1f6ffdf, inset 0 -42px 52px #7796bd75 !important;
+}

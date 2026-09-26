@@ -23,13 +23,13 @@ export function AuthWidget() {
   const initial = user?.name?.trim().slice(0, 1).toUpperCase() ?? "S";
 
   return <>
-    <button className="auth-widget-button" onClick={() => setOpen(true)}>{user ? user.name : "SIGN IN"}</button>
+    <button className="auth-widget-button" onClick={() => setOpen(true)}>{user ? user.name : "로그인"}</button>
     {open && createPortal(
       <div className="auth-modal-backdrop" onClick={() => setOpen(false)}>
         <section className="auth-modal" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="auth-title">
           <button className="auth-modal-close" onClick={() => setOpen(false)} aria-label="닫기">×</button>
           <div className="auth-modal-mark" aria-hidden="true">✦</div>
-          <p className="eyebrow">STARDEX ACCOUNT</p>
+          <p className="eyebrow">STARDEX 계정</p>
           <h2 id="auth-title">{user ? "계정이 연결되어 있어요" : "컬렉션을 저장하세요"}</h2>
           {user ? <>
             <div className="auth-profile">
