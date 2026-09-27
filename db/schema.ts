@@ -34,3 +34,10 @@ export const userCards = sqliteTable("user_cards", {
   quantity: integer("quantity").notNull().default(1),
   createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
 }, (table) => ({ pk: primaryKey({ columns: [table.userId, table.cardId] }) }));
+
+export const userCollectionStates = sqliteTable("user_collection_states", {
+  userId: text("user_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
+  coin: integer("coin").notNull().default(3000),
+  showcaseJson: text("showcase_json").notNull().default("[]"),
+  updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});

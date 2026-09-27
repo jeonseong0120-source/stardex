@@ -12,10 +12,10 @@ export function CardShell({name,englishName,rarity,serial,skill,flavor,artwork,a
   const rarityClass=rarity.toLowerCase().replaceAll(" ","-");
   const isFoil=["SUPER RARE","SECRET RARE","UR","BR","MR"].includes(rarity);
   const rarityLabel:Record<string,string>={"COMMON":"C","RARE":"R","SUPER RARE":"SR","SECRET RARE":"SSR","UR":"UR","BR":"BR","MR":"MR"};
-  return <article data-card-key={cardKey} className={`tcg-shell tcg-shell--${palette} tcg-shell--${rarityClass} ${isFoil?"tcg-shell--foil-card":""} ${compact?"tcg-shell--compact":""}`} style={{"--accent":accent} as CSSProperties}>
+  const resolvedAccent=rarity==="RARE"?"#78bafc":rarity==="MR"?"#c59aff":accent;
+  return <article data-card-key={cardKey} className={`tcg-shell tcg-shell--${palette} tcg-shell--${rarityClass} ${isFoil?"tcg-shell--foil-card":""} ${compact?"tcg-shell--compact":""}`} style={{"--accent":resolvedAccent} as CSSProperties}>
     <div className="tcg-shell__art">{artwork&&<img src={artwork} alt="" />}</div><div className="tcg-shell__shade"/><div className="tcg-shell__foil"/>
     <header className="tcg-shell__header"><div className="tcg-shell__meta"><span>STARDEX · YT01</span><small>{serial}</small></div><b>{rarityLabel[rarity]||rarity}</b></header>
-    <aside className="tcg-shell__rail">크리에이터<br/>컬렉터블<br/>에디션</aside>
     <section className="tcg-shell__name"><strong>{name}</strong><span>{englishName}</span></section>
     <section className="tcg-shell__skill"><i>✦</i><div><b>{skill}</b><p>{flavor}</p></div></section>
   </article>;

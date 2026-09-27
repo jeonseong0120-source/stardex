@@ -1,0 +1,18 @@
+/* Per-card framing corrections shared by collection cards and the detail viewer. */
+.tcg-shell[data-card-key="193"] .tcg-shell__art img{
+  object-position:center 22%;
+  transform:scale(1.05);
+  transform-origin:center 22%;
+}
+
+.tcg-shell[data-card-key="202"] .tcg-shell__art img{
+  object-position:center 100%;
+}
+
+.tcg-shell[data-card-key="095"].tcg-shell--mr{
+  --accent:#a96de3 !important;
+}
+
+.tcg-shell[data-card-key="095"].tcg-shell--mr::before{
+  border-color:#d8b7ff !important;
+}

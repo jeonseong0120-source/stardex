@@ -85,6 +85,30 @@ for(const [no,flavor] of Object.entries(moeFlavorByNo)){if(cardMap[no])cardMap[n
 // (which expose their card number as data-card-key) use the same viewer data.
 for(const [key,card] of Object.entries(cardMap)){if(!/^\d+$/.test(key)){cardMap[card.no]=card;english[card.no]=english[key]||card.name}}
 Object.assign(cardMap,{"102":{...cardMap["102"],rarity:"RARE",accent:"#78bafc"},"105":{...cardMap["105"],rarity:"RARE",accent:"#78bafc"},"111":{...cardMap["111"],rarity:"RARE",accent:"#78bafc"},"116":{...cardMap["116"],rarity:"RARE",accent:"#78bafc"},"132":{...cardMap["132"],rarity:"RARE",accent:"#78bafc"},"150":{...cardMap["150"],rarity:"RARE",accent:"#78bafc"},"173":{...cardMap["173"],rarity:"RARE",accent:"#78bafc"},"185":{...cardMap["185"],rarity:"UR",accent:"#f5c86a"},"186":{...cardMap["186"],rarity:"UR",accent:"#f5c86a"}});
+// Keep the rotating detail view in lockstep with the collection source of truth.
+Object.assign(cardMap,{
+  "008":{...cardMap["008"],rarity:"BR",accent:"#24242b"},
+  "060":{...cardMap["060"],rarity:"BR",accent:"#24242b"},
+  "086":{...cardMap["086"],rarity:"BR",accent:"#24242b"},
+  "095":{...cardMap["095"],rarity:"MR",accent:"#c59aff"},
+  "099":{...cardMap["099"],name:"나인테일(암컷)",rarity:"SUPER RARE",accent:"#ff8ca5",artwork:"/cards/moe-ninetales-m-sr.png"},
+  "138":{...cardMap["138"],rarity:"BR",accent:"#24242b"},
+  "161":{...cardMap["161"],rarity:"BR",accent:"#24242b"},
+  "163":{...cardMap["163"],rarity:"BR",accent:"#24242b"},
+  "185":{...cardMap["185"],rarity:"BR",accent:"#24242b"},
+  "186":{...cardMap["186"],rarity:"BR",accent:"#24242b"},
+  "200":{...cardMap["200"],rarity:"BR",accent:"#24242b"},
+  "202":{...cardMap["202"],rarity:"UR",accent:"#f5c86a"},
+  "203":{...cardMap["203"],rarity:"UR",accent:"#f5c86a"},
+  "204":{...cardMap["204"],rarity:"BR",accent:"#24242b"}
+});
+cardMap["나인테일(암컷)"]={...cardMap["099"]};
+english["099"]="NINETALES · BLOSSOM";
+delete cardMap["나인테일(수컷)"];
+delete cardMap["098"];
+delete english["098"];
+delete cardMap["110"];
+delete english["110"];
 const nameOf=(item:Element)=>item.querySelector<HTMLElement>(".tcg-shell")?.dataset.cardKey||item.querySelector(".tcg-shell__name strong")?.textContent||item.querySelector("img")?.alt.replace(" 완성 카드","")||"";
 const rarityValues:Record<string,number>={COMMON:100,RARE:300,"SUPER RARE":1000,MR:3000,UR:10000,BR:30000};
 const estimatedValue=(card:GalleryCard)=>Math.round((rarityValues[card.rarity]||100)*(0.8+((Number(card.no)%14)/10))/10)*10;
