@@ -1,29 +1,14 @@
 .archive-card__quantity{position:absolute;right:.55rem;bottom:2.7rem;z-index:3;min-width:2.3em;padding:.24rem .36rem;border:1px solid #ffffff9c;background:#121118e6;color:#fff;font:.58rem ui-monospace,SFMono-Regular,monospace;letter-spacing:.06em;box-shadow:0 4px 12px #0008}
 
-/* Pack-result labels live below the artwork so the card face remains unobstructed. */
-.result-grid{align-items:flex-start;gap:1.5rem 1rem}
-.result-item{display:flex;flex-direction:column;align-items:center}
+/* Keep the original corner badge treatment, just slightly quieter. */
 .result-item>b{
-  position:static;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  box-sizing:border-box;
-  min-height:1.9rem;
-  margin-top:.65rem;
-  padding:.42rem .65rem;
-  border-radius:999px;
-  font:700 .56rem/1 ui-monospace,SFMono-Regular,monospace;
-  letter-spacing:.11em;
+  top:.52rem;
+  left:.42rem;
+  padding:.18rem .3rem;
+  font-size:.43rem;
+  letter-spacing:.09em;
   white-space:nowrap;
-  box-shadow:0 .45rem 1.2rem #27201b18;
 }
-.result-item>b.new{border:1px solid #c28f42;background:linear-gradient(135deg,#fff8d9,#eac26e);color:#453010}
-.result-item>b.new:before{content:"✦";margin-right:.38rem;font-size:.72rem;color:#a36a19}
-.result-item>b.duplicate{border:1px solid #80796d;background:#f6f3ec;color:#565147}
-.result-item>b.duplicate:before{content:"↻";margin-right:.35rem;font-size:.78rem;color:#756e63}
 @media(max-width:700px){
-  .result-grid{gap:1.1rem .55rem}
-  .result-item>b{min-height:1.55rem;margin-top:.5rem;padding:.32rem .42rem;font-size:.38rem;letter-spacing:.07em}
-  .result-item>b.new:before,.result-item>b.duplicate:before{margin-right:.22rem;font-size:.52rem}
+  .result-item>b{top:.35rem;left:.28rem;padding:.13rem .22rem;font-size:.32rem;letter-spacing:.06em}
 }
