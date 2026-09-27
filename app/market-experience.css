@@ -1,6 +1,7 @@
 .market-experience{min-height:calc(100vh - 130px);max-width:1180px;margin:0 auto;padding:4.5rem 2rem 7rem;color:#292720}
 .market-hero{display:flex;align-items:end;justify-content:space-between;gap:2rem;padding:0 0 2.5rem;border-bottom:1px solid #d8d2c5}
-.market-hero h1{margin:0;font:400 clamp(3.35rem,7vw,6.1rem)/.8 Georgia,serif;letter-spacing:-.08em}
+.market-hero__eyebrow{margin:0 0 .65rem;color:#827d75;font:.55rem monospace;letter-spacing:.28em}
+.market-hero h1{margin:0;font:400 clamp(3.4rem,7vw,6.6rem)/.78 Georgia,serif;letter-spacing:-.085em}
 .market-hero p:not(.eyebrow){max-width:33rem;margin:1.3rem 0 0;color:#716b5f;font-size:.9rem;line-height:1.7}
 .market-hero aside{min-width:13rem;margin-bottom:.1rem;padding:1.05rem 1.2rem;border:1px solid #bcb3a2;background:#f8f5ed;box-shadow:8px 8px 0 #ddd5c6}
 .market-hero aside span,.market-hero aside small{display:block;color:#80796c;font-size:.58rem;letter-spacing:.12em}

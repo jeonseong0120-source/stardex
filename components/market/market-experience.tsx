@@ -48,7 +48,7 @@ export function MarketExperience({ cards, quantities, coin, renderCard, onCollec
   const cardOf = (id: string) => cards.find((card) => card.no === id);
 
   return <section className="market-experience">
-    <header className="market-hero"><div><h1>EXCHANGE</h1><p>중복 카드는 고정 시세로 거래합니다. 도감 보관용 마지막 한 장은 항상 보호됩니다.</p></div><aside><span>내 보유 코인</span><strong>◇ {coin.toLocaleString()}</strong><small>거래 수수료 0%</small></aside></header>
+    <header className="market-hero"><div><p className="market-hero__eyebrow">거래소</p><h1>EXCHANGE</h1><p>중복 카드는 고정 시세로 거래합니다. 도감 보관용 마지막 한 장은 항상 보호됩니다.</p></div><aside><span>내 보유 코인</span><strong>◇ {coin.toLocaleString()}</strong><small>거래 수수료 0%</small></aside></header>
     <div className="market-tabs" role="tablist" aria-label="거래소 메뉴"><button className={tab === "buy" ? "is-active" : ""} onClick={() => setTab("buy")}>구매하기 <i>{listings.reduce((sum, item) => sum + item.quantity, 0)}</i></button><button className={tab === "sell" ? "is-active" : ""} onClick={() => setTab("sell")}>판매하기</button><button className={tab === "mine" ? "is-active" : ""} onClick={() => setTab("mine")}>내 판매 목록 <i>{myListings.length}</i></button></div>
     <div className="market-toolbar"><div>{rarities.map((item) => <button key={item} className={rarity === item ? "is-active" : ""} onClick={() => setRarity(item)}>{item === "ALL" ? "전체" : labels[item]}</button>)}</div><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="카드 이름 검색" aria-label="카드 이름 검색"/></div>
     {notice && <p className="market-notice" role="status">{notice}</p>}
