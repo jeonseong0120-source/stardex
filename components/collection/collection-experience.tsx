@@ -16,6 +16,7 @@ export type CollectionCard = {
 type Props = {
   cards: CollectionCard[];
   owned: Set<string>;
+  quantities: Map<string, number>;
   showcase: (string | null)[];
   onShowcaseChange: (slots: (string | null)[]) => void;
   coin: number;
@@ -31,7 +32,7 @@ const rarityLabels: Record<string, string> = {
 const rarityValues: Record<string, number> = { COMMON: 100, RARE: 300, "SUPER RARE": 1000, MR: 3000, UR: 10000, BR: 30000 };
 const cardValue = (card: CollectionCard) => Math.round((rarityValues[card.rarity] || 100) * (0.8 + ((Number(card.no) % 14) / 10)) / 10) * 10;
 
-export function CollectionExperience({ cards, owned, showcase, onShowcaseChange, coin, showcaseExpansionPrice, showcaseExpansionSize, onExpandShowcase, renderCard }: Props) {
+export function CollectionExperience({ cards, owned, quantities, showcase, onShowcaseChange, coin, showcaseExpansionPrice, showcaseExpansionSize, onExpandShowcase, renderCard }: Props) {
   const [tab, setTab] = useState<"archive" | "showcase">("archive");
   const [series, setSeries] = useState<"youtube" | "moe">("youtube");
   const [rarity, setRarity] = useState("ALL");
@@ -89,15 +90,15 @@ export function CollectionExperience({ cards, owned, showcase, onShowcaseChange,
       <p>컬렉션</p>
       <div><button className={tab === "archive" ? "is-active" : ""} onClick={() => setTab("archive")}>아카이브</button><button className={tab === "showcase" ? "is-active" : ""} onClick={() => setTab("showcase")}>쇼케이스</button></div>
     </div>
-    {tab === "archive" ? <Archive cards={seriesCards} allCards={cards} series={series} onSeriesChange={setSeries} owned={owned} visibleCards={visibleCards} rarity={rarity} setRarity={setRarity} status={status} setStatus={setStatus} query={query} setQuery={setQuery} progressOpen={progressOpen} setProgressOpen={setProgressOpen} renderCard={renderCard} onSelect={setSelected} /> : <Showcase cards={cards} owned={owned} slots={showcase} coin={coin} expansionPrice={showcaseExpansionPrice} expansionSize={showcaseExpansionSize} onExpand={onExpandShowcase} onPickSlot={setPickerSlot} onRemove={(slot) => updateSlot(slot, null)} renderCard={renderCard} onSelect={setSelected} />}
+    {tab === "archive" ? <Archive cards={seriesCards} allCards={cards} series={series} onSeriesChange={setSeries} owned={owned} quantities={quantities} visibleCards={visibleCards} rarity={rarity} setRarity={setRarity} status={status} setStatus={setStatus} query={query} setQuery={setQuery} progressOpen={progressOpen} setProgressOpen={setProgressOpen} renderCard={renderCard} onSelect={setSelected} /> : <Showcase cards={cards} owned={owned} slots={showcase} coin={coin} expansionPrice={showcaseExpansionPrice} expansionSize={showcaseExpansionSize} onExpand={onExpandShowcase} onPickSlot={setPickerSlot} onRemove={(slot) => updateSlot(slot, null)} renderCard={renderCard} onSelect={setSelected} />}
     {selected && <Detail card={selected} owned={owned.has(selected.no)} onClose={() => setSelected(null)} onAdd={addSelected} renderCard={renderCard} />}
     {pickerSlot !== null && <Picker cards={cards} owned={owned} slot={pickerSlot} onChoose={(cardNo) => { const card = cards.find((item) => item.no === cardNo); if (showcase.includes(cardNo)) { setPickerSlot(null); setToast(`${card?.name ?? "카드"}는 이미 쇼케이스에 추가되어 있습니다.`); window.setTimeout(() => setToast(null), 2600); return; } updateSlot(pickerSlot, cardNo); setToast(`${card?.name ?? "카드"}가 쇼케이스에 추가되었습니다.`); window.setTimeout(() => setToast(null), 2600); }} onClose={() => setPickerSlot(null)} />}
     {toast && <div className="showcase-toast" role="status"><b>✦</b><span>{toast}</span></div>}
   </section>;
 }
 
-function Archive({ cards, allCards, series, onSeriesChange, owned, visibleCards, rarity, setRarity, status, setStatus, query, setQuery, progressOpen, setProgressOpen, renderCard, onSelect }: {
-  cards: CollectionCard[]; allCards: CollectionCard[]; series: "youtube" | "moe"; onSeriesChange: (value: "youtube" | "moe") => void; owned: Set<string>; visibleCards: CollectionCard[]; rarity: string; setRarity: (value: string) => void; status: "ALL" | "OWNED" | "UNDISCOVERED"; setStatus: (value: "ALL" | "OWNED" | "UNDISCOVERED") => void; query: string; setQuery: (value: string) => void; progressOpen: boolean; setProgressOpen: (value: boolean) => void; renderCard: Props["renderCard"]; onSelect: (card: CollectionCard) => void;
+function Archive({ cards, allCards, series, onSeriesChange, owned, quantities, visibleCards, rarity, setRarity, status, setStatus, query, setQuery, progressOpen, setProgressOpen, renderCard, onSelect }: {
+  cards: CollectionCard[]; allCards: CollectionCard[]; series: "youtube" | "moe"; onSeriesChange: (value: "youtube" | "moe") => void; owned: Set<string>; quantities: Map<string, number>; visibleCards: CollectionCard[]; rarity: string; setRarity: (value: string) => void; status: "ALL" | "OWNED" | "UNDISCOVERED"; setStatus: (value: "ALL" | "OWNED" | "UNDISCOVERED") => void; query: string; setQuery: (value: string) => void; progressOpen: boolean; setProgressOpen: (value: boolean) => void; renderCard: Props["renderCard"]; onSelect: (card: CollectionCard) => void;
 }) {
   const rarities = ["ALL", "COMMON", "RARE", "SUPER RARE", "MR", "UR", "BR"];
   const seriesOwned = cards.filter((card) => owned.has(card.no)).length;
@@ -106,7 +107,7 @@ function Archive({ cards, allCards, series, onSeriesChange, owned, visibleCards,
     <header className="archive-hero"><div className="archive-hero__intro"><p className="eyebrow">내 아카이브</p><h1>{series === "youtube" ? "YOUTUBE" : "MOE MON"}<br/><i>COLLECTION</i></h1><p className="archive-hero__copy">{series === "youtube" ? "Discover stories from a wide range of creators." : "Collect cards from a new world of adventure and characters."}</p><div className="collection-series-tabs collection-series-tabs--inline" role="tablist" aria-label="카드 팩 시리즈"><button className={series === "youtube" ? "is-active" : ""} onClick={() => onSeriesChange("youtube")}>YOUTUBE COLLECTION</button><button className={series === "moe" ? "is-active" : ""} onClick={() => onSeriesChange("moe")}>MOE MON COLLECTION</button></div></div><div className="archive-progress-summary"><div className="archive-progress-summary__series"><span>시리즈</span><strong>{seriesOwned} <i>/</i> {cards.length}</strong><small>획득 카드</small></div><div className="archive-progress-summary__total"><span>전체 아카이브</span><strong>{archiveOwned} <i>/</i> {allCards.length}</strong><small>2개 컬렉션 합계</small></div><button onClick={() => setProgressOpen(!progressOpen)}>등급별 진행 보기 <span>→</span></button></div></header>
     {progressOpen && <section className="progress-panel" aria-label="등급별 컬렉션 진행도"><p>컬렉션 진행도</p>{rarities.slice(1).map((item) => { const subset = cards.filter((card) => card.rarity === item); const count = subset.filter((card) => owned.has(card.no)).length; return <div key={item}><span>{rarityLabels[item]}</span><b>{count} / {subset.length}</b><em><i style={{ width: `${subset.length ? count / subset.length * 100 : 0}%` }}/></em></div>})}</section>}
     <div className="archive-controls"><div className="rarity-tabs">{rarities.map((item) => <button key={item} className={rarity === item ? "is-active" : ""} onClick={() => setRarity(item)}>{item === "ALL" ? "전체" : rarityLabels[item]}</button>)}</div><div className="archive-tools"><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="이름으로 검색" aria-label="이름 검색"/><span>정렬 : 카드 번호</span></div><div className="status-tabs">{(["ALL", "OWNED", "UNDISCOVERED"] as const).map((item) => <button key={item} className={status === item ? "is-active" : ""} onClick={() => setStatus(item)}>{item === "ALL" ? "전체" : item === "OWNED" ? "보유" : "미보유"}</button>)}</div></div>
-    <div className="archive-grid">{visibleCards.map((card, index) => owned.has(card.no) ? <button className="archive-card collection-card" key={card.no}>{renderCard(card, index + 1)}<small>NO. {card.no}</small><strong className="archive-card__value"><span>예상 가치</span>{cardValue(card).toLocaleString("ko-KR")}원</strong></button> : <article className="archive-locked" key={card.no}><div className="archive-locked__silhouette"><span>?</span></div><small>NO. {card.no}</small></article>)}</div>
+    <div className="archive-grid">{visibleCards.map((card, index) => owned.has(card.no) ? <button className="archive-card collection-card" key={card.no}>{renderCard(card, index + 1)}<small>NO. {card.no}</small>{(quantities.get(card.no) ?? 1) > 1 && <b className="archive-card__quantity">×{quantities.get(card.no)}</b>}<strong className="archive-card__value"><span>예상 가치</span>{cardValue(card).toLocaleString("ko-KR")}원</strong></button> : <article className="archive-locked" key={card.no}><div className="archive-locked__silhouette"><span>?</span></div><small>NO. {card.no}</small></article>)}</div>
   </>;
 }
 
