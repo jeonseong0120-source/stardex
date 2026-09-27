@@ -1,0 +1,38 @@
+/* Mobile-first safety net shared by the archive, pack opening, showcase, and exchange. */
+@media (max-width: 700px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { overflow-x: hidden; }
+
+  button, input, select, textarea { touch-action: manipulation; }
+
+  .topbar { gap: .45rem; padding-inline: .8rem !important; }
+  .logo { flex: 0 0 auto; font-size: .69rem; letter-spacing: .22em; }
+  .nav-links { flex: 1 1 auto; justify-content: center; gap: .48rem; margin-left: 0; min-width: 0; }
+  .nav-links button { min-height: 2.45rem; padding: .45rem 0; font-size: .5rem; letter-spacing: .045em; white-space: nowrap; }
+  .topbar-actions { flex: 0 0 auto; gap: .35rem; margin-left: 0; }
+  .balance { font-size: .51rem; letter-spacing: .025em; white-space: nowrap; }
+  .balance span { margin-right: .17rem; font-size: .8rem; }
+  .topbar-actions .auth-widget-button { max-width: 4.9rem; min-height: 2.35rem; overflow: hidden; padding: .46rem .5rem !important; font-size: .5rem !important; letter-spacing: .04em !important; text-overflow: ellipsis; white-space: nowrap; }
+
+  .collection-experience, .market-experience { padding-inline: 1rem !important; }
+
+  .archive-controls .rarity-tabs, .archive-controls .status-tabs, .collection-series-tabs, .showcase-filter-tabs {
+    -ms-overflow-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .archive-controls .rarity-tabs::-webkit-scrollbar, .archive-controls .status-tabs::-webkit-scrollbar, .collection-series-tabs::-webkit-scrollbar, .showcase-filter-tabs::-webkit-scrollbar { display: none; }
+  .archive-controls .rarity-tabs button, .archive-controls .status-tabs button, .collection-series-tabs button, .showcase-filter-tabs button { min-height: 2.45rem; white-space: nowrap; }
+
+  .market-tabs button { min-height: 2.6rem; white-space: nowrap; }
+  .market-card__info button { min-height: 2.6rem; }
+  .showcase-toast { left: 1rem; right: 1rem; width: auto; }
+}
+
+@media (max-width: 380px) {
+  .topbar { gap: .28rem; padding-inline: .55rem !important; }
+  .logo { font-size: .63rem; letter-spacing: .16em; }
+  .nav-links { gap: .28rem; }
+  .nav-links button, .topbar-actions .auth-widget-button { font-size: .46rem !important; }
+  .balance { font-size: .46rem; }
+}

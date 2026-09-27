@@ -30,6 +30,7 @@ import { CollectionExperience } from "../components/collection/collection-experi
 import { MarketExperience } from "../components/market/market-experience";
 import { PointerEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./market-experience.css";
+import "./mobile-safety.css";
 import { getPack, type PackId, type PackRarity } from "../components/packs/pack-catalog";
 import { MOE_CARDS } from "../components/packs/moe-cards";
 import { AuthWidget } from "../components/auth/auth-widget";
