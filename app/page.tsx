@@ -201,7 +201,7 @@ function ResultFlow({pack,packType,resultKinds,resultCounts,reset}:{pack:Card[];
     <h2>COLLECTION<br/><i>UPDATED</i></h2>
     <div className="result-grid">{pack.map((card,index)=>{
       const duplicate=resultKinds[index]==="duplicate";
-      return <div className="result-item" key={`${card.no}-${index}`}><CardFace card={card} serial={pullsSerial(index)} small/><b className={duplicate?"duplicate":"new"}>{duplicate?`DUPLICATE ×${resultCounts[index]??2}`:"NEW"}</b></div>
+      return <div className="result-item" key={`${card.no}-${index}`}><CardFace card={card} serial={pullsSerial(index)} small/><b className={duplicate?"duplicate":"new"}>{duplicate?`DUPLICATE · TOTAL ×${resultCounts[index]??2}`:"NEW DISCOVERY"}</b></div>
     })}</div>
     <p className="summary"><b>{fresh} NEW CARD{fresh===1?"":"S"}</b> · Duplicate cards are kept in your collection for future selling.</p>
     <button className="open-button" onClick={reset}>BACK TO SHOP</button>
