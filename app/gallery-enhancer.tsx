@@ -98,6 +98,7 @@ Object.assign(cardMap,{
   "185":{...cardMap["185"],rarity:"BR",accent:"#24242b"},
   "186":{...cardMap["186"],rarity:"BR",accent:"#24242b"},
   "200":{...cardMap["200"],rarity:"BR",accent:"#24242b"},
+  "201":{...cardMap["201"],rarity:"UR",accent:"#f5c86a"},
   "202":{...cardMap["202"],rarity:"UR",accent:"#f5c86a"},
   "203":{...cardMap["203"],rarity:"UR",accent:"#f5c86a"},
   "204":{...cardMap["204"],rarity:"BR",accent:"#24242b"}
