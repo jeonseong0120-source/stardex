@@ -5,10 +5,12 @@
 
   button, input, select, textarea { touch-action: manipulation; }
 
-  .topbar { gap: .45rem; padding-inline: .8rem !important; }
-  .logo { flex: 0 0 auto; font-size: .69rem; letter-spacing: .22em; }
-  .nav-links { flex: 1 1 auto; justify-content: center; gap: .48rem; margin-left: 0; min-width: 0; }
-  .nav-links button { min-height: 2.45rem; padding: .45rem 0; font-size: .5rem; letter-spacing: .045em; white-space: nowrap; }
+  .topbar { gap: .6rem; padding-inline: 1rem !important; }
+  .logo { flex: 0 0 auto; font-size: .78rem; letter-spacing: .24em; }
+  .nav-links { flex: 1 1 auto; justify-content: center; gap: 0; margin-left: 0; min-width: 0; border: 1px solid #cfc7ba; background: #faf7f0; }
+  .nav-links button { flex: 1 1 0; min-height: 2.55rem; padding: .45rem .42rem; border-right: 1px solid #d9d1c4; color: #766f65; font-size: .6rem; font-weight: 700; letter-spacing: .035em; white-space: nowrap; }
+  .nav-links button:last-child { border-right: 0; }
+  .nav-links .active { border-bottom: 0; background: #2c2924; color: #fffdf8; }
   .topbar-actions { flex: 0 0 auto; gap: .35rem; margin-left: 0; }
   .balance { font-size: .51rem; letter-spacing: .025em; white-space: nowrap; }
   .balance span { margin-right: .17rem; font-size: .8rem; }
@@ -27,6 +29,14 @@
   .market-tabs button { min-height: 2.6rem; white-space: nowrap; }
   .market-card__info button { min-height: 2.6rem; }
   .showcase-toast { left: 1rem; right: 1rem; width: auto; }
+
+  .showcase-room { min-width: 0; overflow: hidden; }
+  .showcase-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; min-height: 0; padding: 2.2rem .15rem 1.35rem; gap: 1rem; }
+  .showcase-hero > div:first-child { grid-column: 1 / -1; min-width: 0; }
+  .showcase-hero h1 { font-size: clamp(3rem, 14vw, 4.15rem); line-height: .82; }
+  .showcase-hero > div:last-child { grid-column: 2; justify-self: end; align-self: end; text-align: right; }
+  .showcase-nav { gap: 1.6rem; margin: .8rem 0 0; }
+  .showcase-nav button { min-width: 2.75rem; min-height: 2.75rem; }
 }
 
 @media (max-width: 380px) {
@@ -35,4 +45,11 @@
   .nav-links { gap: .28rem; }
   .nav-links button, .topbar-actions .auth-widget-button { font-size: .46rem !important; }
   .balance { font-size: .46rem; }
+}
+
+@media (max-width: 520px) {
+  .topbar { flex-wrap: wrap; min-height: 7.45rem; align-content: center; padding-block: .55rem !important; }
+  .nav-links { order: 3; flex-basis: 100%; width: 100%; }
+  .nav-links button { min-height: 2.45rem; font-size: .58rem; }
+  .topbar-actions { margin-left: auto; }
 }
