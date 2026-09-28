@@ -15,13 +15,14 @@ export function MarketExperience({ cards, quantities, coin, renderCard, onCollec
   const [exchangeTab, setExchangeTab] = useState<"buy" | "list" | "mine">("buy");
   const [series, setSeries] = useState<"youtube" | "moe">("youtube");
   const [listings, setListings] = useState<Listing[]>([]), [myListings, setMyListings] = useState<MyListing[]>([]), [offers, setOffers] = useState<{ date: string; youtube: SystemOffer[]; moe: SystemOffer[] }>({ date: "", youtube: [], moe: [] });
-  const [rarity, setRarity] = useState("ALL"), [query, setQuery] = useState(""), [pending, setPending] = useState<string | null>(null), [notice, setNotice] = useState<string | null>(null), [loaded, setLoaded] = useState(false);
+  const [rarity, setRarity] = useState("ALL"), [query, setQuery] = useState(""), [pending, setPending] = useState<string | null>(null), [notice, setNotice] = useState<string | null>(null), [toast, setToast] = useState<string | null>(null), [loaded, setLoaded] = useState(false);
   const refreshMarket = async () => { const response = await fetch("/api/marketplace"); if (!response.ok) { setNotice("거래소를 불러오지 못했습니다. 로그인 상태를 확인해주세요."); return; } const data = await response.json() as { listings: Listing[]; myListings: MyListing[]; systemOffers: typeof offers }; setListings(data.listings); setMyListings(data.myListings); setOffers(data.systemOffers); setLoaded(true); };
   useEffect(() => { const initial = window.setTimeout(() => void refreshMarket(), 0), retry = window.setTimeout(() => void refreshMarket(), 900); return () => { window.clearTimeout(initial); window.clearTimeout(retry); }; }, []);
   const listedByCard = useMemo(() => myListings.reduce((map, item) => map.set(item.cardId, (map.get(item.cardId) ?? 0) + 1), new Map<string, number>()), [myListings]);
   const matches = <T extends { name: string; rarity: string }>(items: T[]) => items.filter((item) => (rarity === "ALL" || item.rarity === rarity) && (!query.trim() || item.name.toLowerCase().includes(query.trim().toLowerCase())));
   const duplicates = useMemo(() => cards.filter((card) => (quantities.get(card.no) ?? 0) > 1), [cards, quantities]);
   const listable = useMemo(() => duplicates.filter((card) => (quantities.get(card.no) ?? 0) - (listedByCard.get(card.no) ?? 0) > 1), [duplicates, listedByCard, quantities]);
+  const showToast = (message: string) => { setToast(message); window.setTimeout(() => setToast(null), 2600); };
   const perform = async (action: "list" | "cancel" | "buy" | "system-buy" | "system-sell", key: string) => {
     setPending(`${action}:${key}`); setNotice(null);
     try {
@@ -30,7 +31,7 @@ export function MarketExperience({ cards, quantities, coin, renderCard, onCollec
       const data = await response.json() as { error?: string };
       if (!response.ok) { setNotice(data.error ?? "거래를 완료하지 못했습니다."); return; }
       await Promise.all([refreshMarket(), onCollectionRefresh()]);
-      setNotice(action === "system-buy" ? "오늘의 카드 구매 완료. 컬렉션에 추가되었습니다." : action === "system-sell" ? "시스템 매입이 완료되었습니다. 코인을 받았습니다." : action === "list" ? "교환 매물로 등록했습니다." : action === "buy" ? "교환이 완료되었습니다. 컬렉션에 카드가 추가되었습니다." : "교환 등록을 취소했습니다.");
+      showToast(action === "system-buy" ? "오늘의 카드 구매 완료. 컬렉션에 추가되었습니다." : action === "system-sell" ? "시스템 매입이 완료되었습니다. 코인을 받았습니다." : action === "list" ? "교환 매물로 등록했습니다." : action === "buy" ? "교환이 완료되었습니다. 컬렉션에 카드가 추가되었습니다." : "교환 등록을 취소했습니다.");
     } catch { setNotice("네트워크 문제로 거래를 완료하지 못했습니다."); } finally { setPending(null); }
   };
   const rarities = ["ALL", "RARE", "SUPER RARE", "MR", "UR", "BR"], cardOf = (id: string) => cards.find((card) => card.no === id);
@@ -58,6 +59,7 @@ export function MarketExperience({ cards, quantities, coin, renderCard, onCollec
       {!loaded ? <p className="market-empty">교환소를 준비하고 있습니다.</p> : exchangeTab === "buy" ? <MarketGrid>{matches(listings).map((listing, index) => { const card = cardOf(listing.cardId); return card && <CardTile key={listing.cardId} card={card} serial={index + 700} renderCard={renderCard}><strong>{listing.name}</strong><b>◇ {listing.price.toLocaleString()}</b><span>{labels[listing.rarity]} · 교환 가능 {listing.quantity}장</span><button disabled={coin < listing.price || pending === `buy:${listing.cardId}`} onClick={() => void perform("buy", listing.cardId)}>교환하기</button></CardTile>; })}</MarketGrid> : exchangeTab === "list" ? <MarketGrid>{matches(listable).map((card, index) => { const held = quantities.get(card.no) ?? 0, listed = listedByCard.get(card.no) ?? 0, available = held - listed - 1; return <CardTile key={card.no} card={card} serial={index + 900} renderCard={renderCard}><strong>{card.name}</strong><b>◇ {marketPrice(card.no, card.rarity).toLocaleString()}</b><span>{labels[card.rarity]} · 보유 {held}장 · 등록 가능 {available}장</span><small>도감 보관용 마지막 1장 보호</small><button disabled={pending === `list:${card.no}`} onClick={() => void perform("list", card.no)}>교환 등록</button></CardTile>; })}</MarketGrid> : <MarketGrid>{matches(myListings).map((listing, index) => { const card = cardOf(listing.cardId); return card && <CardTile key={listing.id} card={card} serial={index + 1100} renderCard={renderCard}><strong>{listing.name}</strong><b>◇ {listing.price.toLocaleString()}</b><span>{labels[listing.rarity]} · 교환 등록 중</span><button className="market-card__cancel" disabled={pending === `cancel:${listing.id}`} onClick={() => void perform("cancel", listing.id)}>등록 취소</button></CardTile>; })}</MarketGrid>}
       {loaded && ((exchangeTab === "buy" && !matches(listings).length) || (exchangeTab === "list" && !matches(listable).length) || (exchangeTab === "mine" && !matches(myListings).length)) && <p className="market-empty">{exchangeTab === "buy" ? "현재 교환 가능한 카드가 없습니다." : exchangeTab === "list" ? "등록할 수 있는 중복 카드가 없습니다." : "등록한 교환 카드가 없습니다."}</p>}
     </>}
+    {toast && <div className="showcase-toast" role="status"><b>✦</b><span>{toast}</span></div>}
   </section>;
 }
 
