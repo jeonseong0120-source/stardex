@@ -11,13 +11,13 @@ type Props = { cards: CollectionCard[]; quantities: Map<string, number>; coin: n
 const labels: Record<string, string> = { COMMON: "C", RARE: "R", "SUPER RARE": "SR", MR: "MR", UR: "UR", BR: "BR" };
 
 export function MarketExperience({ cards, quantities, coin, renderCard, onCollectionRefresh }: Props) {
-  const [section, setSection] = useState<"store" | "exchange">("store");
+  const [section, setSection] = useState<"shop" | "sell" | "exchange">("shop");
   const [exchangeTab, setExchangeTab] = useState<"buy" | "list" | "mine">("buy");
   const [series, setSeries] = useState<"youtube" | "moe">("youtube");
   const [listings, setListings] = useState<Listing[]>([]), [myListings, setMyListings] = useState<MyListing[]>([]), [offers, setOffers] = useState<{ date: string; youtube: SystemOffer[]; moe: SystemOffer[] }>({ date: "", youtube: [], moe: [] });
   const [rarity, setRarity] = useState("ALL"), [query, setQuery] = useState(""), [pending, setPending] = useState<string | null>(null), [notice, setNotice] = useState<string | null>(null), [loaded, setLoaded] = useState(false);
   const refreshMarket = async () => { const response = await fetch("/api/marketplace"); if (!response.ok) { setNotice("거래소를 불러오지 못했습니다. 로그인 상태를 확인해주세요."); return; } const data = await response.json() as { listings: Listing[]; myListings: MyListing[]; systemOffers: typeof offers }; setListings(data.listings); setMyListings(data.myListings); setOffers(data.systemOffers); setLoaded(true); };
-  useEffect(() => { void refreshMarket(); const retry = window.setTimeout(() => void refreshMarket(), 900); return () => window.clearTimeout(retry); }, []);
+  useEffect(() => { const initial = window.setTimeout(() => void refreshMarket(), 0), retry = window.setTimeout(() => void refreshMarket(), 900); return () => { window.clearTimeout(initial); window.clearTimeout(retry); }; }, []);
   const listedByCard = useMemo(() => myListings.reduce((map, item) => map.set(item.cardId, (map.get(item.cardId) ?? 0) + 1), new Map<string, number>()), [myListings]);
   const matches = <T extends { name: string; rarity: string }>(items: T[]) => items.filter((item) => (rarity === "ALL" || item.rarity === rarity) && (!query.trim() || item.name.toLowerCase().includes(query.trim().toLowerCase())));
   const duplicates = useMemo(() => cards.filter((card) => (quantities.get(card.no) ?? 0) > 1), [cards, quantities]);
@@ -37,15 +37,18 @@ export function MarketExperience({ cards, quantities, coin, renderCard, onCollec
   const currentOffers = offers[series];
 
   return <section className="market-experience">
-    <header className="market-hero"><div><p className="market-hero__eyebrow">거래소</p><h1>EXCHANGE</h1><p>{section === "store" ? "오늘의 카드와 중복 카드 즉시 매입을 이용하세요." : "유저끼리 고정 시세로 안전하게 카드를 교환합니다."}</p></div><aside><span>내 보유 코인</span><strong>◇ {coin.toLocaleString()}</strong><small>유저 교환 수수료 0%</small></aside></header>
-    <div className="market-mode-tabs" role="tablist" aria-label="거래소 구분"><button className={section === "store" ? "is-active" : ""} onClick={() => setSection("store")}>판매 <small>SYSTEM SHOP</small></button><button className={section === "exchange" ? "is-active" : ""} onClick={() => setSection("exchange")}>교환 <small>PLAYER EXCHANGE</small></button></div>
-    {section === "store" ? <>
-      <div className="system-heading"><div><span>DAILY SELECTION · {offers.date || "LOADING"}</span><h2>오늘의 판매 카드</h2><p>매일 자정(KST), 각 시리즈별 다섯 장이 새롭게 공개됩니다.</p></div><div className="system-series-tabs"><button className={series === "youtube" ? "is-active" : ""} onClick={() => setSeries("youtube")}>크리에이터 팩</button><button className={series === "moe" ? "is-active" : ""} onClick={() => setSeries("moe")}>모에몬 팩</button></div></div>
+    <header className="market-hero"><div><p className="market-hero__eyebrow">거래소</p><h1>EXCHANGE</h1><p>{section === "shop" ? "오늘의 시스템 카드로 컬렉션을 완성하세요." : section === "sell" ? "중복 카드를 시스템에 즉시 판매하고 코인을 받으세요." : "유저끼리 고정 시세로 안전하게 카드를 교환합니다."}</p></div><aside><span>내 보유 코인</span><strong>◇ {coin.toLocaleString()}</strong><small>유저 교환 수수료 0%</small></aside></header>
+    <div className="market-mode-tabs" role="tablist" aria-label="거래소 구분"><button className={section === "shop" ? "is-active" : ""} onClick={() => setSection("shop")}>구매 <small>SYSTEM SHOP</small></button><button className={section === "sell" ? "is-active" : ""} onClick={() => setSection("sell")}>판매 <small>SYSTEM BUYBACK</small></button><button className={section === "exchange" ? "is-active" : ""} onClick={() => setSection("exchange")}>교환 <small>PLAYER EXCHANGE</small></button></div>
+    {section === "shop" ? <>
+      <div className="system-heading"><div><span>DAILY SELECTION · {offers.date || "LOADING"}</span><h2>오늘의 구매 카드</h2><p>매일 자정(KST), 각 시리즈별 다섯 장이 새롭게 공개됩니다.</p></div><div className="system-series-tabs"><button className={series === "youtube" ? "is-active" : ""} onClick={() => setSeries("youtube")}>크리에이터 팩</button><button className={series === "moe" ? "is-active" : ""} onClick={() => setSeries("moe")}>모에몬 팩</button></div></div>
       <div className="market-toolbar"><div>{rarities.map((item) => <button key={item} className={rarity === item ? "is-active" : ""} onClick={() => setRarity(item)}>{item === "ALL" ? "전체" : labels[item]}</button>)}</div><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="카드 이름 검색" aria-label="카드 이름 검색"/></div>
       {notice && <p className="market-notice" role="status">{notice}</p>}
       {!loaded ? <p className="market-empty">오늘의 카드를 준비하고 있습니다.</p> : <MarketGrid>{matches(currentOffers).map((offer, index) => { const card = cardOf(offer.id); return card && <CardTile key={offer.id} card={card} serial={index + 1300} renderCard={renderCard}><strong>{offer.name}</strong><b>◇ {offer.price.toLocaleString()}</b><span>{labels[offer.rarity]} · 시스템 판매</span><button disabled={coin < offer.price || pending === `system-buy:${offer.id}`} onClick={() => void perform("system-buy", offer.id)}>구매하기</button></CardTile>; })}</MarketGrid>}
       {loaded && !matches(currentOffers).length && <p className="market-empty">조건에 맞는 오늘의 카드가 없습니다.</p>}
+    </> : section === "sell" ? <>
       <section className="system-buyback"><div><span>SYSTEM BUYBACK</span><h2>중복 카드 즉시 매입</h2><p>도감 보관용 마지막 한 장은 남기고, 중복 카드만 즉시 코인으로 바꿀 수 있습니다.</p></div><small>매입가 · 기준 시세의 60%</small></section>
+      <div className="market-toolbar"><div>{rarities.map((item) => <button key={item} className={rarity === item ? "is-active" : ""} onClick={() => setRarity(item)}>{item === "ALL" ? "전체" : labels[item]}</button>)}</div><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="카드 이름 검색" aria-label="카드 이름 검색"/></div>
+      {notice && <p className="market-notice" role="status">{notice}</p>}
       <MarketGrid>{matches(duplicates).map((card, index) => { const held = quantities.get(card.no) ?? 0, sellable = held - 1, price = systemSellPrice(card.no, card.rarity); return <CardTile key={card.no} card={card} serial={index + 1500} renderCard={renderCard}><strong>{card.name}</strong><b>◇ {price.toLocaleString()}</b><span>{labels[card.rarity]} · 보유 {held}장 · 즉시 판매 {sellable}장</span><button disabled={pending === `system-sell:${card.no}`} onClick={() => void perform("system-sell", card.no)}>즉시 판매</button></CardTile>; })}</MarketGrid>
       {loaded && !matches(duplicates).length && <p className="market-empty">즉시 판매할 중복 카드가 없습니다.</p>}
     </> : <>

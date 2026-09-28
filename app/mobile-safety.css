@@ -28,7 +28,8 @@
 
   .market-tabs button { min-height: 2.6rem; white-space: nowrap; }
   .market-card__info button { min-height: 2.6rem; }
-  .showcase-toast { left: 1rem; right: 1rem; width: auto; }
+  .showcase-toast { left: 1rem; right: 1rem; width: auto; transform: none; animation: showcase-toast-in-mobile .25s ease; }
+  @keyframes showcase-toast-in-mobile { from { opacity: 0; transform: translateY(.6rem); } to { opacity: 1; transform: translateY(0); } }
 
   .showcase-room { min-width: 0; overflow: hidden; }
   .showcase-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; min-height: 0; padding: 2.2rem .15rem 1.35rem; gap: 1rem; }
@@ -45,6 +46,11 @@
   .nav-links { gap: .28rem; }
   .nav-links button, .topbar-actions .auth-widget-button { font-size: .46rem !important; }
   .balance { font-size: .46rem; }
+
+  .gallery-card { width: min(70vw, 252px); }
+  .gallery-arrow { width: 2.25rem; height: 3.7rem; font-size: 2.55rem; }
+  .gallery-close { top: .7rem; right: .7rem; font-size: 2.1rem; }
+  .collection-card-viewer .collection-detail-flip { width: min(66vw, 238px); }
 }
 
 @media (max-width: 520px) {
@@ -52,4 +58,7 @@
   .nav-links { order: 3; flex-basis: 100%; width: 100%; }
   .nav-links button { min-height: 2.45rem; font-size: .58rem; }
   .topbar-actions { margin-left: auto; }
+
+  .opening-screen--tear,
+  .deal-screen { min-height: calc(100svh - 7.45rem); }
 }
