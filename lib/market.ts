@@ -1,10 +1,10 @@
 export const marketBaseValues: Record<string, number> = {
-  COMMON: 100,
-  RARE: 300,
-  "SUPER RARE": 1000,
-  MR: 3000,
-  UR: 10000,
-  BR: 30000,
+  COMMON: 500,
+  RARE: 2000,
+  "SUPER RARE": 25000,
+  MR: 180000,
+  UR: 650000,
+  BR: 1250000,
 };
 
 /** Fixed, server-authoritative card price used by the peer marketplace. */

@@ -1,0 +1,30 @@
+.attendance-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .38rem;
+  min-height: 2.4rem;
+  padding: .48rem .62rem;
+  border: 1px solid #bdb3a4;
+  border-radius: 0;
+  background: #fffdf8;
+  color: #60584e;
+  font-size: .61rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+
+.attendance-button b { color: #a98235; font-size: .75rem; }
+.attendance-button:hover { border-color: #302c27; background: #f3eee5; color: #28241f; }
+.attendance-button.is-complete { border-color: #82725b; background: #f4eee2; color: #393229; }
+
+@media (max-width: 700px) {
+  .attendance-button { gap: .22rem; min-height: 2.35rem; padding: .46rem .45rem; font-size: .5rem; white-space: nowrap; }
+  .attendance-button b { font-size: .64rem; }
+}
+
+@media (max-width: 380px) {
+  .attendance-button span { display: none; }
+  .attendance-button { min-width: 2.1rem; justify-content: center; padding-inline: .38rem; }
+}

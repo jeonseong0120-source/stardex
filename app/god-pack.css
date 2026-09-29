@@ -1,0 +1,83 @@
+.opening-screen--god,
+.deal-screen--god,
+.result-screen--god {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.opening-screen--god::before,
+.deal-screen--god::before,
+.result-screen--god::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -35%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(255, 243, 193, .92) 0 5%, rgba(255, 210, 122, .34) 19%, transparent 43%),
+    conic-gradient(from 0deg at 50% 50%, rgba(255, 214, 112, .06), rgba(201, 172, 255, .3), rgba(255, 229, 154, .1), rgba(139, 212, 255, .28), rgba(255, 214, 112, .06));
+  animation: god-pack-aura 8s linear infinite;
+}
+
+.opening-screen--god::after,
+.deal-screen--god::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-radial-gradient(circle at 50% 58%, transparent 0 6.5%, rgba(255, 248, 222, .2) 6.65% 6.85%, transparent 7% 13%);
+  opacity: .65;
+  animation: god-pack-rings 3.8s ease-out infinite;
+}
+
+.god-pack-badge {
+  width: fit-content;
+  margin: 0 auto 14px;
+  padding: 7px 12px 6px;
+  color: #5b4725;
+  border: 1px solid rgba(126, 96, 39, .55);
+  background: rgba(255, 250, 230, .68);
+  box-shadow: 0 0 22px rgba(255, 207, 89, .45);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .22em;
+}
+
+.opening-screen--god .tear-pack {
+  filter: drop-shadow(0 0 25px rgba(255, 207, 88, .8)) drop-shadow(0 0 68px rgba(166, 137, 255, .32));
+}
+
+.deal-screen--god .reveal-card:not(.flipped) {
+  animation: god-pack-card-pulse 2.7s ease-in-out infinite;
+}
+
+.deal-screen--god .reveal-card:nth-child(2) { animation-delay: .18s; }
+.deal-screen--god .reveal-card:nth-child(3) { animation-delay: .36s; }
+.deal-screen--god .reveal-card:nth-child(4) { animation-delay: .54s; }
+.deal-screen--god .reveal-card:nth-child(5) { animation-delay: .72s; }
+
+@keyframes god-pack-aura {
+  from { transform: rotate(0deg) scale(1); }
+  to { transform: rotate(360deg) scale(1.08); }
+}
+
+@keyframes god-pack-rings {
+  0% { transform: scale(.72); opacity: 0; }
+  35% { opacity: .65; }
+  100% { transform: scale(1.18); opacity: 0; }
+}
+
+@keyframes god-pack-card-pulse {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 204, 88, 0)); }
+  50% { filter: drop-shadow(0 0 16px rgba(255, 204, 88, .8)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opening-screen--god::before,
+  .opening-screen--god::after,
+  .deal-screen--god::before,
+  .deal-screen--god::after,
+  .deal-screen--god .reveal-card:not(.flipped) { animation: none; }
+}

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { CardBackFace } from "../../components/card-shell";
+import { marketPrice } from "../../lib/market";
 
 export type CollectionCard = {
   no: string;
@@ -29,8 +30,7 @@ type Props = {
 const rarityLabels: Record<string, string> = {
   COMMON: "C", RARE: "R", "SUPER RARE": "SR", MR: "MR", UR: "UR", BR: "BR",
 };
-const rarityValues: Record<string, number> = { COMMON: 100, RARE: 300, "SUPER RARE": 1000, MR: 3000, UR: 10000, BR: 30000 };
-const cardValue = (card: CollectionCard) => Math.round((rarityValues[card.rarity] || 100) * (0.8 + ((Number(card.no) % 14) / 10)) / 10) * 10;
+const cardValue = (card: CollectionCard) => marketPrice(card.no, card.rarity);
 
 export function CollectionExperience({ cards, owned, quantities, showcase, onShowcaseChange, coin, showcaseExpansionPrice, showcaseExpansionSize, onExpandShowcase, renderCard }: Props) {
   const [tab, setTab] = useState<"archive" | "showcase">("archive");
@@ -114,7 +114,7 @@ function Archive({ cards, allCards, series, onSeriesChange, owned, quantities, v
 function Showcase({ cards, owned, slots, coin, expansionPrice, expansionSize, onExpand, onPickSlot, onRemove, renderCard, onSelect }: { cards: CollectionCard[]; owned: Set<string>; slots: (string | null)[]; coin: number; expansionPrice: number; expansionSize: number; onExpand: () => void; onPickSlot: (slot: number) => void; onRemove: (slot: number) => void; renderCard: Props["renderCard"]; onSelect: (card: CollectionCard) => void }) {
   const displayed = slots.filter(Boolean).length;
   const [editing, setEditing] = useState(false);
-  return <section className="showcase-room"><header className="showcase-hero"><div><p className="eyebrow">내 쇼케이스</p><h1>FAVORITE<br/><i>CARDS.</i></h1><p>나만의 컬렉션을 전시해보세요.</p></div><div><strong>{String(displayed).padStart(2, "0")} <i>/</i> {String(slots.length).padStart(2, "0")}</strong><small>전시 중</small><button className={`showcase-edit ${editing ? "is-active" : ""}`} onClick={() => setEditing(!editing)}>{editing ? "완료" : "쇼케이스 편집"}</button></div></header><div className="showcase-nav"><button aria-label="이전 쇼케이스">‹</button><b>쇼케이스 01</b><button aria-label="다음 쇼케이스">›</button></div><p className="showcase-divider">나만의 전시</p><div className={`showcase-grid ${editing ? "is-editing" : ""}`}>{slots.map((cardNo, slot) => { const card = cards.find((item) => item.no === cardNo); return <article className={`toploader ${card ? "toploader--filled" : ""}`} key={slot}>{card ? <><button className="toploader__card collection-card">{renderCard(card, slot + 1)}<span className="toploader__view">카드 보기</span></button><button className="toploader__remove" onClick={() => onRemove(slot)} aria-label={`${card.name} 전시에서 제거`}>{editing ? "제거" : "카드 제거"}</button><footer><b>{String(slot + 1).padStart(2, "0")}</b>{card.name}<small>{rarityLabels[card.rarity]} · NO. {card.no}</small></footer></> : <button className="toploader__add" onClick={() => onPickSlot(slot)}><b>＋</b><span>카드 추가</span><small>{String(slot + 1).padStart(2, "0")}</small></button>}</article>})}<button className="showcase-expand" onClick={onExpand} disabled={coin < expansionPrice}><b>＋</b><span>전시 슬롯 {expansionSize}칸 추가</span><small>{expansionPrice} ◇</small>{coin < expansionPrice && <em>코인이 부족합니다</em>}</button></div></section>;
+  return <section className="showcase-room"><header className="showcase-hero"><div><p className="eyebrow">내 쇼케이스</p><h1>FAVORITE<br/><i>CARDS.</i></h1><p>나만의 컬렉션을 전시해보세요.</p></div><div><strong>{String(displayed).padStart(2, "0")} <i>/</i> {String(slots.length).padStart(2, "0")}</strong><small>전시 중</small><button className={`showcase-edit ${editing ? "is-active" : ""}`} onClick={() => setEditing(!editing)}>{editing ? "완료" : "쇼케이스 편집"}</button></div></header><div className="showcase-nav"><button aria-label="이전 쇼케이스">‹</button><b>쇼케이스 01</b><button aria-label="다음 쇼케이스">›</button></div><p className="showcase-divider">나만의 전시</p><div className={`showcase-grid ${editing ? "is-editing" : ""}`}>{slots.map((cardNo, slot) => { const card = cards.find((item) => item.no === cardNo); return <article className={`toploader ${card ? "toploader--filled" : ""}`} key={slot}>{card ? <><button className="toploader__card collection-card">{renderCard(card, slot + 1)}<span className="toploader__view">카드 보기</span></button><button className="toploader__remove" onClick={() => onRemove(slot)} aria-label={`${card.name} 전시에서 제거`}>{editing ? "제거" : "카드 제거"}</button><footer><b>{String(slot + 1).padStart(2, "0")}</b>{card.name}<small>{rarityLabels[card.rarity]} · NO. {card.no}</small></footer></> : <button className="toploader__add" onClick={() => onPickSlot(slot)}><b>＋</b><span>카드 추가</span><small>{String(slot + 1).padStart(2, "0")}</small></button>}</article>})}<button className="showcase-expand" onClick={onExpand} disabled={coin < expansionPrice}><b>＋</b><span>전시 슬롯 {expansionSize}칸 추가</span><small>{expansionPrice.toLocaleString()}원</small>{coin < expansionPrice && <em>잔액이 부족합니다</em>}</button></div></section>;
 }
 
 function Detail({ card, owned, onClose, onAdd, renderCard }: { card: CollectionCard; owned: boolean; onClose: () => void; onAdd: () => void; renderCard: Props["renderCard"] }) {

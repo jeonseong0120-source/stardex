@@ -15,6 +15,27 @@
       "when": 1790518780342,
       "tag": "0001_wakeful_roulette",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1790616627602,
+      "tag": "0003_attendance",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1790690000000,
+      "tag": "0004_trade_requests",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1790776400000,
+      "tag": "0005_notifications",
+      "breakpoints": true
     }
   ]
 }
