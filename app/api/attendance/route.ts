@@ -17,7 +17,12 @@ async function currentUser(request: Request) {
 }
 
 async function ensureCollectionState(userId: string) {
-  await getDb().insert(userCollectionStates).values({ userId, coin: 3000, showcaseJson: "[]", updatedAt: new Date().toISOString() }).onConflictDoNothing().run();
+  // The production database predates the attendance column migration. Use only
+  // the original collection-state columns here so first-time attendance claims
+  // do not fail while the legacy schema is still in place.
+  await env.DB.prepare("INSERT OR IGNORE INTO user_collection_states (user_id, coin, showcase_json, updated_at) VALUES (?, ?, ?, ?)")
+    .bind(userId, 3000, "[]", new Date().toISOString())
+    .run();
 }
 
 async function ensureAttendanceTable() {
