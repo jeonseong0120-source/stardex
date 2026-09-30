@@ -48,6 +48,7 @@ type Card = { no:string; name:string; rarity:Rarity; flavor:string; scene:string
 type Opening = "shop" | "box" | "tear" | "deal" | "result";
 const SHOWCASE_EXPANSION_PRICE = 10;
 const SHOWCASE_EXPANSION_SIZE = 3;
+const PACK_OPEN_PRICE = 500;
 const cards:Card[]=[
   {no:"001",name:"침착맨",rarity:"BR",flavor:"방구석 토크",scene:"왕좌와 펜, 무표정의 명언",palette:"royal"},{no:"002",name:"랄로",rarity:"SUPER RARE",flavor:"주식과 무지개 무드",scene:"화면 너머, 해탈한 표정",palette:"rainbow"},{no:"003",name:"곽튜브",rarity:"RARE",flavor:"세계 로컬 식사",scene:"낯선 도시의 식탁",palette:"sunset"},{no:"004",name:"빠더너스",rarity:"SUPER RARE",flavor:"한국 지리 문쌤",scene:"칠판 앞의 능청스러운 한 컷",palette:"chalk"},{no:"005",name:"감스트",rarity:"SUPER RARE",flavor:"축구치킨 광기",scene:"골이 터진 직후의 세레머니",palette:"stadium"},{no:"006",name:"피식대학",rarity:"RARE",flavor:"성수동 바이브",scene:"레트로 셔츠와 도시의 밤",palette:"retro"},{no:"007",name:"숏박스",rarity:"SUPER RARE",flavor:"현실 연애 콩트",scene:"차 안의 아주 현실적인 대화",palette:"drive"},{no:"008",name:"지무비",rarity:"UR",flavor:"결말 포함 영화",scene:"필름과 스크린 사이",palette:"film"},{no:"009",name:"말왕",rarity:"SUPER RARE",flavor:"3대 500 괴력",scene:"철과 숨소리만 남은 체육관",palette:"gym"},{no:"010",name:"보겸",rarity:"RARE",flavor:"근황 올림픽",scene:"카메라를 향한 한 번의 인사",palette:"flash"},{no:"011",name:"떵개떵",rarity:"RARE",flavor:"소리 없는 아우성",scene:"가득 찬 식탁의 ASMR",palette:"table"},{no:"012",name:"윤가놈",rarity:"SUPER RARE",flavor:"포켓몬 마스터의 기행",scene:"몬스터볼과 이해할 수 없는 가설",palette:"monster"}
 ];
@@ -172,7 +173,7 @@ export default function Home(){
   const godPackWeights:Record<Rarity,number>=GOD_PACK_WEIGHTS;
   const packCards=cards.filter(card=>(card.packId??"youtube")===packType);
   const draw=(weights:Record<Rarity,number>)=>{const available=(Object.entries(weights) as [Rarity,number][]).filter(([rarity,weight])=>weight>0&&packCards.some(card=>card.rarity===rarity));const roll=Math.random()*available.reduce((sum,[,weight])=>sum+weight,0);let cursor=0;const rarity=available.find(([ ,weight])=>(cursor+=weight)>roll)?.[0]||packCards[0].rarity;const pool=packCards.filter(card=>card.rarity===rarity);return pool[Math.floor(Math.random()*pool.length)]};
-  const buy=()=>{if(coin<1||!packCards.length)return;const isGodPack=Math.random()<GOD_PACK_CHANCE,weights=isGodPack?godPackWeights:rarityWeights[packType],rarityOrder:Record<Rarity,number>={COMMON:0,RARE:1,"SUPER RARE":2,MR:3,UR:4,BR:5,"SECRET RARE":2};const nextPack=[draw(weights),draw(weights),draw(weights),draw(weights),draw(weights)].sort((a,b)=>rarityOrder[a.rarity]-rarityOrder[b.rarity]);const nextCoin=coin-1;setCoin(nextCoin);void persistCollection(pulls,nextCoin,showcase);setPack(nextPack);setGodPack(isGodPack);setFlipped([]);setDrag(0);setOpening("tear")};
+  const buy=()=>{if(coin<PACK_OPEN_PRICE||!packCards.length)return;const isGodPack=Math.random()<GOD_PACK_CHANCE,weights=isGodPack?godPackWeights:rarityWeights[packType],rarityOrder:Record<Rarity,number>={COMMON:0,RARE:1,"SUPER RARE":2,MR:3,UR:4,BR:5,"SECRET RARE":2};const nextPack=[draw(weights),draw(weights),draw(weights),draw(weights),draw(weights)].sort((a,b)=>rarityOrder[a.rarity]-rarityOrder[b.rarity]);const nextCoin=coin-PACK_OPEN_PRICE;setCoin(nextCoin);void persistCollection(pulls,nextCoin,showcase);setPack(nextPack);setGodPack(isGodPack);setFlipped([]);setDrag(0);setOpening("tear")};
   const expandShowcase=()=>{if(coin<SHOWCASE_EXPANSION_PRICE)return;const nextCoin=coin-SHOWCASE_EXPANSION_PRICE,nextShowcase=[...showcase,...Array(SHOWCASE_EXPANSION_SIZE).fill(null)];setCoin(nextCoin);setShowcase(nextShowcase);void persistCollection(pulls,nextCoin,nextShowcase)};
 useEffect(()=>{if(opening!=="box")return;const timer=window.setTimeout(()=>setOpening("tear"),3200);return()=>window.clearTimeout(timer)},[opening]);
   const begin=(e:PointerEvent<HTMLDivElement>)=>{start.current=e.clientY;e.currentTarget.setPointerCapture(e.pointerId)};
@@ -202,7 +203,7 @@ function Shop({coin,buy,packType,onPackChange,packCards}:{coin:number;buy:()=>vo
     </div>
     <div className="open-area">
       <div className="selected-pack-label"><b>{packType==="moe"?"모에몬 컬렉션":"크리에이터 팩"}</b><span>{packType==="moe"?"팬메이드 모에몬 테마":"STARDEX 기본 컬렉션"}</span></div>
-      <button className="open-button" onClick={buy} disabled={coin<1||!packCards.length}>{packCards.length?"이 박스 열기":"카드 준비 중"} <span>{packCards.length?"1원":""}</span></button>
+      <button className="open-button" onClick={buy} disabled={coin<PACK_OPEN_PRICE||!packCards.length}>{packCards.length?"이 박스 열기":"카드 준비 중"} <span>{packCards.length?`${PACK_OPEN_PRICE.toLocaleString()}원`:""}</span></button>
       <p>테스트 모드 · 모든 카드 동일 확률</p>
     </div>
   </section>
