@@ -17,7 +17,19 @@ async function currentUser(request: Request) {
 }
 
 async function ensureCollectionState(userId: string) {
-  await getDb().insert(userCollectionStates).values({ userId, coin: 3000, showcaseJson: "[]", lastAttendanceDate: "", updatedAt: new Date().toISOString() }).onConflictDoNothing().run();
+  await getDb().insert(userCollectionStates).values({ userId, coin: 3000, showcaseJson: "[]", updatedAt: new Date().toISOString() }).onConflictDoNothing().run();
+}
+
+async function ensureAttendanceTable() {
+  // Keep the reward ledger independent of collection-state migrations. This also
+  // lets an already-deployed database begin supporting attendance safely.
+  await env.DB.prepare(`CREATE TABLE IF NOT EXISTS user_attendance_claims (
+    user_id TEXT NOT NULL,
+    attendance_date TEXT NOT NULL,
+    claim_token TEXT NOT NULL,
+    claimed_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, attendance_date)
+  )`).run();
 }
 
 export async function POST(request: Request) {
@@ -26,7 +38,13 @@ export async function POST(request: Request) {
 
   const date = todayKst();
   await ensureCollectionState(user.id);
-  const claimed = await env.DB.prepare("UPDATE user_collection_states SET coin = coin + ?, last_attendance_date = ?, updated_at = CURRENT_TIMESTAMP WHERE user_id = ? AND last_attendance_date <> ?").bind(DAILY_ATTENDANCE_REWARD, date, user.id, date).run();
-  const state = await getDb().select({ coin: userCollectionStates.coin, lastAttendanceDate: userCollectionStates.lastAttendanceDate }).from(userCollectionStates).where(eq(userCollectionStates.userId, user.id)).get();
-  return Response.json({ claimed: claimed.meta.changes === 1, reward: DAILY_ATTENDANCE_REWARD, coin: state?.coin ?? 3000, date, lastAttendanceDate: state?.lastAttendanceDate ?? "" });
+  await ensureAttendanceTable();
+
+  const claimToken = crypto.randomUUID();
+  const [claim] = await env.DB.batch([
+    env.DB.prepare("INSERT OR IGNORE INTO user_attendance_claims (user_id, attendance_date, claim_token) VALUES (?, ?, ?)").bind(user.id, date, claimToken),
+    env.DB.prepare("UPDATE user_collection_states SET coin = coin + ?, updated_at = CURRENT_TIMESTAMP WHERE user_id = ? AND EXISTS (SELECT 1 FROM user_attendance_claims WHERE user_id = ? AND attendance_date = ? AND claim_token = ?)").bind(DAILY_ATTENDANCE_REWARD, user.id, user.id, date, claimToken),
+  ]);
+  const state = await getDb().select({ coin: userCollectionStates.coin }).from(userCollectionStates).where(eq(userCollectionStates.userId, user.id)).get();
+  return Response.json({ claimed: claim.meta.changes === 1, reward: DAILY_ATTENDANCE_REWARD, coin: state?.coin ?? 3000, date, lastAttendanceDate: date });
 }
