@@ -1,7 +1,7 @@
 import { and, eq, gt } from "drizzle-orm";
 import { env } from "cloudflare:workers";
 import { getDb } from "../../../db";
-import { cards, sessions, userCards, userCollectionStates, users } from "../../../db/schema";
+import { cards, sessions, userCards, users } from "../../../db/schema";
 import { systemBuyPrice, systemSellPrice } from "../../../lib/market";
 import { NORMAL_PACK_WEIGHTS } from "../../../lib/rarity";
 
@@ -15,7 +15,11 @@ async function currentUser(request: Request) {
   if (!id) return null;
   return (await getDb().select({ user: users }).from(sessions).innerJoin(users, eq(sessions.userId, users.id)).where(and(eq(sessions.id, id), gt(sessions.expiresAt, Math.floor(Date.now() / 1000)))).get())?.user ?? null;
 }
-async function ensureCollectionState(userId: string) { await getDb().insert(userCollectionStates).values({ userId, coin: 3000, showcaseJson: "[]", updatedAt: new Date().toISOString() }).onConflictDoNothing().run(); }
+async function ensureCollectionState(userId: string) {
+  await env.DB.prepare("INSERT OR IGNORE INTO user_collection_states (user_id, coin, showcase_json, updated_at) VALUES (?, ?, ?, ?)")
+    .bind(userId, 3000, "[]", new Date().toISOString())
+    .run();
+}
 function todayKst() { return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()); }
 function hash(input: string) { let value = 2166136261; for (let index = 0; index < input.length; index += 1) value = Math.imul(value ^ input.charCodeAt(index), 16777619); return value >>> 0; }
 function dailyOffers(rows: CardRow[]) {
