@@ -1,0 +1,41 @@
+.notification-detail {
+  position: fixed;
+  z-index: 102;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: #211e1994;
+}
+
+.notification-detail section {
+  position: relative;
+  width: min(100%, 34rem);
+  max-height: min(90dvh, 48rem);
+  overflow: auto;
+  padding: 2rem;
+  border: 1px solid #aea18b;
+  background: #fbf9f3;
+  box-shadow: 15px 16px 0 #16130d44;
+}
+
+.notification-detail section > p:first-of-type { margin: 0; color: #887864; font: .52rem ui-monospace, SFMono-Regular, monospace; letter-spacing: .15em; }
+.notification-detail h2 { margin: .55rem 2rem 1.4rem 0; color: #2e2a23; font: 500 2rem Georgia, serif; }
+.notification-detail__close { position: absolute; top: 1rem; right: 1rem; display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid #cbc2b3; background: #f8f5ed; color: #373229; font-size: 1.3rem; cursor: pointer; }
+.notification-detail__cards { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 1rem; padding: 1rem; border: 1px solid #ded5c7; background: #f0ebe0; }
+.notification-detail__cards.is-single { grid-template-columns: minmax(0, 1fr); max-width: 15rem; margin: 0 auto; }
+.notification-detail__cards > i { color: #80643d; font: 1.5rem Georgia, serif; font-style: normal; }
+.notification-detail .notification-modal__card img,
+.notification-detail .notification-modal__card > b { width: min(100%, 172px); }
+.notification-detail .notification-modal__card strong { font-size: 1.05rem; }
+.notification-detail__copy { margin: 1.4rem 0 0; color: #665f54; font-size: .85rem; line-height: 1.65; text-align: center; }
+.notification-detail__confirm { display: block; width: min(100%, 16rem); margin: 1.5rem auto 0; padding: .8rem; border: 1px solid #302c24; background: #302c24; color: #fffdf7; font-weight: 700; font-size: .72rem; cursor: pointer; }
+
+@media (max-width: 650px) {
+  .notification-detail { align-items: end; padding: 0; }
+  .notification-detail section { width: 100%; max-height: 88dvh; padding: 1.35rem 1rem calc(1.35rem + env(safe-area-inset-bottom)); box-shadow: none; }
+  .notification-detail h2 { font-size: 1.6rem; }
+  .notification-detail__cards { gap: .5rem; padding: .7rem; }
+  .notification-detail .notification-modal__card img,
+  .notification-detail .notification-modal__card > b { max-width: 126px; }
+}

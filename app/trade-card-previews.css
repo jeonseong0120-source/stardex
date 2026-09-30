@@ -1,0 +1,54 @@
+.trade-card-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: .7rem;
+  margin: 1rem 0 1.5rem;
+  padding: 1rem;
+  border: 1px solid #dfd6c6;
+  background: #eee9dc;
+}
+
+.trade-card-pair > i,
+.trade-request__cards > em { color: #80643d; font: 1.35rem Georgia, serif; font-style: normal; }
+.trade-card-preview { min-width: 0; text-align: center; }
+.trade-card-preview > span,
+.trade-artwork > span { display: block; margin-bottom: .45rem; color: #766d60; font: .5rem ui-monospace, SFMono-Regular, monospace; letter-spacing: .12em; }
+.trade-card-preview__art { width: min(100%, 138px); margin: 0 auto .55rem; overflow: hidden; box-shadow: 0 7px 15px #332a1c25; }
+.trade-card-preview__art .tcg-shell,
+.trade-card-preview__art .tcg-complete { width: 100% !important; height: auto; }
+.trade-card-preview__art > b { display: grid; place-items: center; aspect-ratio: .68; background: #e2dbcf; color: #9b907e; font: 2rem Georgia, serif; }
+.trade-card-preview strong,
+.trade-card-preview small,
+.trade-artwork strong,
+.trade-artwork small { display: block; }
+.trade-card-preview strong,
+.trade-artwork strong { overflow: hidden; color: #302c24; font: 500 .92rem Georgia, serif; text-overflow: ellipsis; white-space: nowrap; }
+.trade-card-preview small,
+.trade-artwork small { margin-top: .22rem; color: #776d60; font-size: .56rem; }
+
+.trade-offer-list { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: 20rem; }
+.trade-offer-list button { grid-template-columns: 4rem minmax(0, 1fr); align-items: center; gap: .75rem; padding: .55rem; }
+.trade-offer-list__art { overflow: hidden; box-shadow: 0 4px 10px #332a1c1c; }
+.trade-offer-list__art .tcg-shell,
+.trade-offer-list__art .tcg-complete { width: 100% !important; height: auto; }
+.trade-offer-list b { display: block; }
+
+.trade-request__cards { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: .65rem; }
+.trade-artwork { min-width: 0; text-align: center; }
+.trade-artwork img { display: block; width: 100%; aspect-ratio: .72; object-fit: cover; border: 1px solid #d2cabd; background: #e8e1d5; box-shadow: 0 6px 14px #332a1c1a; }
+.trade-artwork strong { margin-top: .5rem; }
+.trade-request > div:not(.trade-request__cards) { display: contents; }
+
+@media (max-width: 650px) {
+  .trade-card-pair { gap: .4rem; padding: .7rem; }
+  .trade-card-preview__art { max-width: 108px; }
+  .trade-offer-list { max-height: 18rem; }
+  .trade-offer-list button { grid-template-columns: 3.35rem minmax(0, 1fr); padding: .45rem; }
+  .trade-card-preview strong,
+  .trade-artwork strong { font-size: .78rem; }
+  .trade-request__cards { gap: .4rem; }
+  .trade-artwork > span { font-size: .43rem; letter-spacing: .06em; }
+  .trade-artwork strong { white-space: normal; }
+  .trade-request__cards > em { font-size: 1rem; }
+}

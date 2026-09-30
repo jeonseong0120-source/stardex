@@ -1,6 +1,6 @@
 import { and, desc, eq, gt } from "drizzle-orm";
 import { getDb } from "../../../db";
-import { cards, notifications, sessions, users } from "../../../db/schema";
+import { cards, notifications, sessions, tradeRequests, users } from "../../../db/schema";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,18 @@ async function currentUser(request: Request) {
 export async function GET(request: Request) {
   const user = await currentUser(request); if (!user) return Response.json({ error: "로그인이 필요합니다." }, { status: 401 });
   const rows = await getDb().select({ notification: notifications, artworkUrl: cards.artworkUrl, rarity: cards.rarity, cardName: cards.name }).from(notifications).leftJoin(cards, eq(notifications.cardId, cards.id)).where(eq(notifications.userId, user.id)).orderBy(desc(notifications.createdAt)).limit(50).all();
-  return Response.json({ notifications: rows.map(({ notification, artworkUrl, rarity, cardName }) => ({ ...notification, artworkUrl, rarity, cardName, data: (() => { try { return JSON.parse(notification.dataJson); } catch { return {}; } })() })) });
+  const hydrated = await Promise.all(rows.map(async ({ notification, artworkUrl, rarity, cardName }) => {
+    const data = (() => { try { return JSON.parse(notification.dataJson) as Record<string, unknown>; } catch { return {}; } })();
+    if (notification.type === "TRADE_REQUEST" && notification.relatedId && !data.requestedArtworkUrl) {
+      const trade = await getDb().select({ requestedCardId: tradeRequests.requestedCardId }).from(tradeRequests).where(eq(tradeRequests.id, notification.relatedId)).get();
+      if (trade) {
+        const requestedCard = await getDb().select({ name: cards.name, rarity: cards.rarity, artworkUrl: cards.artworkUrl }).from(cards).where(eq(cards.id, trade.requestedCardId)).get();
+        if (requestedCard) Object.assign(data, { requestedName: requestedCard.name, requestedRarity: requestedCard.rarity, requestedArtworkUrl: requestedCard.artworkUrl });
+      }
+    }
+    return { ...notification, artworkUrl, rarity, cardName, data };
+  }));
+  return Response.json({ notifications: hydrated });
 }
 
 export async function POST(request: Request) {

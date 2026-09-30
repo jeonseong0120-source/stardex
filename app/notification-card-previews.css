@@ -1,0 +1,29 @@
+.notification-card__art--trade {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  padding: 2px;
+}
+
+.notification-card__art--trade img { min-width: 0; object-fit: cover; }
+
+.notification-modal__pair {
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: .6rem;
+  padding: .9rem;
+}
+
+.notification-modal__card { min-width: 0; text-align: center; }
+.notification-modal__card > span { display: block; margin-bottom: .35rem; color: #7e6946; font: .48rem ui-monospace, SFMono-Regular, monospace; letter-spacing: .08em; }
+.notification-modal__card img,
+.notification-modal__card > b { display: block; width: min(100%, 126px); aspect-ratio: .7; margin: 0 auto .45rem; object-fit: cover; border: 1px solid #d6ccbc; background: #e4ddcf; }
+.notification-modal__card > b { display: grid; place-items: center; color: #978972; font: 1.8rem Georgia, serif; }
+.notification-modal__card strong { overflow: hidden; color: #302c24; font: 500 .92rem Georgia, serif; text-overflow: ellipsis; white-space: nowrap; }
+.notification-modal__card small { display: block; margin-top: .2rem; color: #7e6946; font: .58rem ui-monospace, SFMono-Regular, monospace; }
+
+@media (max-width: 650px) {
+  .notification-modal__pair { padding: .65rem; gap: .4rem; }
+  .notification-modal__card img,
+  .notification-modal__card > b { max-width: 104px; }
+  .notification-modal__card strong { font-size: .78rem; }
+}
